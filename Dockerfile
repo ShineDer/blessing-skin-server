@@ -19,8 +19,8 @@ FROM node:22-alpine as frontend
 WORKDIR /app
 
 COPY package.json yarn.lock ./
-# 新版 node 镜像不再预装 yarn，按 packageManager 字段显式安装
-RUN npm install -g yarn@1.22.22 && yarn install --frozen-lockfile
+# node:22-alpine 已自带 yarn 1.22.22，与 packageManager 字段一致
+RUN yarn install --frozen-lockfile
 
 COPY postcss.config.js tsconfig.build.json tsconfig.json webpack.config.ts ./
 COPY tools/*Plugin.ts ./tools/
