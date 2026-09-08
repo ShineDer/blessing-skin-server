@@ -1,0 +1,64 @@
+# Blessing Skin Server 生产部署编排
+# 架构：1Panel OpenResty (80/443) -> 本编排 app 容器 (127.0.0.1:8080) -> db 容器 (MariaDB)
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: blessing-skin-server:local
+    container_name: blessing-skin
+    restart: unless-stopped
+    ports:
+      # 仅绑定本机回环地址，外部访问经由 1Panel 反向代理
+      - "127.0.0.1:8080:80"
+    environment:
+      APP_ENV: production
+      APP_DEBUG: "false"
+      APP_URL: http://127.0.0.1:8080
+      # 覆盖镜像内默认的 SQLite 配置（Laravel 中真实环境变量优先于 .env）
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: "3306"
+      DB_DATABASE: blessingskin
+      DB_USERNAME: blessingskin
+      DB_PASSWORD: ${DB_PASSWORD}
+      CACHE_DRIVER: file
+      SESSION_DRIVER: file
+      QUEUE_CONNECTION: sync
+    volumes:
+      # 命名卷：首次创建自动继承镜像内 /app/storage 内容（含 .env 与 APP_KEY）
+      - blessing-storage:/app/storage
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - blessing-net
+
+  db:
+    image: mariadb:10.11
+    container_name: blessing-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: blessingskin
+      MYSQL_USER: blessingskin
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      TZ: Asia/Shanghai
+    volumes:
+      - blessing-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - blessing-net
+
+volumes:
+  blessing-storage:
+  blessing-db:
+
+networks:
+  blessing-net:
+    driver: bridge
