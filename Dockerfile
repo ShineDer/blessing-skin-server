@@ -33,7 +33,7 @@ RUN yarn build && \
     # Strip unused files
     rm -rf *.config.js *.config.ts tsconfig.* \
       package.json yarn.lock node_modules/ \
-      resources/assets/ resources/lang resources/misc resources/misc/backgrounds/ \
+      resources/assets/ resources/lang resources/misc/backgrounds/ \
       tools/
 
 FROM composer:latest as builder
@@ -49,7 +49,7 @@ COPY --from=frontend /app/resources/views/assets ./resources/views/assets
 RUN composer dump-autoload -o --no-dev -n && \
     rm -rf *.config.js *.config.ts tsconfig.* \
       package.json yarn.lock node_modules/ \
-      resources/assets/ resources/misc resources/misc/backgrounds/ \
+      resources/assets/ resources/misc/backgrounds/ \
       tools/ && \
     mv .env.example .env && \
     php artisan key:generate && \
