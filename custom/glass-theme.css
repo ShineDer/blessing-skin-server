@@ -1,0 +1,439 @@
+/* ============================================================
+   Blessing Skin · 玻璃拟态主题 (Glassmorphism)
+   粘贴位置：后台 → 定制 → 自定义 CSS
+   注意：本文件不得出现小于号字符（会被 striptags 截断）
+   ============================================================ */
+
+:root {
+  /* —— 圆角 —— */
+  --g-r-xs: 10px;
+  --g-r-sm: 14px;
+  --g-r-md: 18px;
+  --g-r-lg: 24px;
+  --g-r-xl: 32px;
+  --g-r-pill: 999px;
+
+  /* —— 毛玻璃 —— */
+  --g-glass: rgba(255, 255, 255, 0.62);
+  --g-glass-strong: rgba(255, 255, 255, 0.82);
+  --g-glass-faint: rgba(255, 255, 255, 0.40);
+  --g-hairline: rgba(255, 255, 255, 0.75);
+  --g-ink: #1f2937;
+  --g-ink-soft: #64748b;
+  --g-blur: 22px;
+  --g-sat: 170%;
+
+  /* —— 阴影 —— */
+  --g-shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --g-shadow-sm: 0 4px 14px rgba(15, 23, 42, 0.08);
+  --g-shadow-md: 0 10px 30px rgba(15, 23, 42, 0.12);
+  --g-shadow-lg: 0 22px 60px rgba(15, 23, 42, 0.18);
+  --g-glow: 0 0 0 4px rgba(23, 162, 184, 0.16);
+
+  /* —— 动效 —— */
+  --g-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --g-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --g-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --g-t-fast: 0.18s;
+  --g-t: 0.3s;
+  --g-t-slow: 0.55s;
+}
+
+/* ============ 1. 渐变光斑背景（毛玻璃的"被折射物"） ============ */
+body {
+  background-color: #eef2f8;
+  background-image:
+    radial-gradient(circle at 10% 15%, rgba(23, 162, 184, 0.32), transparent 45%),
+    radial-gradient(circle at 90% 10%, rgba(111, 66, 193, 0.26), transparent 42%),
+    radial-gradient(circle at 78% 88%, rgba(232, 62, 140, 0.20), transparent 48%),
+    radial-gradient(circle at 18% 95%, rgba(32, 201, 151, 0.22), transparent 45%);
+  background-attachment: fixed;
+  color: var(--g-ink);
+}
+
+/* 内页容器透明，让光斑透上来 */
+.content-wrapper,
+.main-footer {
+  background-color: transparent !important;
+  border-top-color: rgba(15, 23, 42, 0.06) !important;
+}
+
+/* ============ 2. 顶栏 / 侧栏：玻璃面板 ============ */
+.main-header.navbar,
+nav.navbar.fixed-top {
+  background: var(--g-glass-strong) !important;
+  -webkit-backdrop-filter: blur(var(--g-blur)) saturate(var(--g-sat));
+  backdrop-filter: blur(var(--g-blur)) saturate(var(--g-sat));
+  border-bottom: 1px solid var(--g-hairline) !important;
+  box-shadow: var(--g-shadow-sm);
+  transition: box-shadow var(--g-t) var(--g-ease), background var(--g-t) var(--g-ease);
+}
+
+/* 浅色玻璃必须翻转文字色，否则 navbar-dark 的白字会消失 */
+.main-header.navbar .nav-link,
+nav.navbar.fixed-top .nav-link,
+.navbar-brand,
+.brand-link,
+.brand-text {
+  color: var(--g-ink) !important;
+  transition: color var(--g-t-fast) var(--g-ease), transform var(--g-t-fast) var(--g-ease);
+}
+.main-header.navbar .nav-link:hover,
+nav.navbar.fixed-top .nav-link:hover {
+  color: #0f766e !important;
+  transform: translateY(-1px);
+}
+.navbar-brand:hover,
+.brand-link:hover {
+  transform: translateY(-1px);
+}
+
+.main-sidebar {
+  background: var(--g-glass) !important;
+  -webkit-backdrop-filter: blur(var(--g-blur)) saturate(var(--g-sat));
+  backdrop-filter: blur(var(--g-blur)) saturate(var(--g-sat));
+  border-right: 1px solid var(--g-hairline);
+  box-shadow: var(--g-shadow-sm);
+}
+
+.nav-sidebar .nav-link {
+  border-radius: var(--g-r-sm);
+  margin: 3px 8px;
+  padding: 8px 12px;
+  transition: background var(--g-t-fast) var(--g-ease),
+              transform var(--g-t-fast) var(--g-ease),
+              box-shadow var(--g-t-fast) var(--g-ease);
+}
+.nav-sidebar .nav-link:hover {
+  background: var(--g-glass-faint);
+  transform: translateX(3px);
+}
+.nav-sidebar .nav-link.active {
+  border-radius: var(--g-r-sm);
+  box-shadow: var(--g-shadow-xs);
+}
+
+/* ============ 3. 卡片：玻璃 + 悬停抬升 ============ */
+.card {
+  border: 1px solid var(--g-hairline);
+  border-radius: var(--g-r-lg);
+  background: var(--g-glass);
+  -webkit-backdrop-filter: blur(var(--g-blur)) saturate(var(--g-sat));
+  backdrop-filter: blur(var(--g-blur)) saturate(var(--g-sat));
+  box-shadow: var(--g-shadow-sm);
+  overflow: hidden;
+  transition: transform var(--g-t) var(--g-ease-out),
+              box-shadow var(--g-t) var(--g-ease-out),
+              border-color var(--g-t) var(--g-ease);
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--g-shadow-md);
+  border-color: rgba(255, 255, 255, 0.95);
+}
+/* 压平 AdminLTE 的彩色顶边，避免破坏圆角 */
+.card.card-primary,
+.card.card-outline,
+.card.card-success,
+.card.card-danger,
+.card.card-warning,
+.card.card-info {
+  border-top-width: 1px;
+}
+.card-header {
+  background: transparent;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+  border-radius: var(--g-r-lg) var(--g-r-lg) 0 0 !important;
+}
+/* 皮肤卡片：清除 Emotion 硬编码的 #eff1f0 灰底，否则玻璃被盖住 */
+.card .card-body,
+.card .card-footer {
+  background-color: transparent !important;
+}
+.card .card-footer {
+  border-top: 1px solid rgba(15, 23, 42, 0.06);
+}
+.card img.card-img-top {
+  border-radius: var(--g-r-md);
+}
+
+.info-box,
+.small-box {
+  border: 1px solid var(--g-hairline);
+  border-radius: var(--g-r-lg);
+  background: var(--g-glass);
+  -webkit-backdrop-filter: blur(var(--g-blur)) saturate(var(--g-sat));
+  backdrop-filter: blur(var(--g-blur)) saturate(var(--g-sat));
+  box-shadow: var(--g-shadow-sm);
+  overflow: hidden;
+  transition: transform var(--g-t) var(--g-ease-out), box-shadow var(--g-t) var(--g-ease-out);
+}
+.info-box:hover,
+.small-box:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--g-shadow-md);
+}
+
+/* ============ 4. 按钮：圆角 + 回弹 ============ */
+.btn {
+  border-radius: var(--g-r-sm);
+  transition: transform var(--g-t-fast) var(--g-spring),
+              box-shadow var(--g-t) var(--g-ease),
+              filter var(--g-t) var(--g-ease);
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--g-shadow-sm);
+  filter: brightness(1.04);
+}
+.btn:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: var(--g-shadow-xs);
+}
+.btn-primary {
+  box-shadow: 0 6px 18px rgba(0, 123, 255, 0.26);
+}
+.btn-primary:hover {
+  box-shadow: 0 10px 26px rgba(0, 123, 255, 0.34);
+}
+.btn-rounded {
+  border-radius: var(--g-r-pill);
+}
+/* 按钮组：只保留首尾圆角，避免互相叠角 */
+.btn-group .btn {
+  border-radius: 0;
+}
+.btn-group .btn:first-child {
+  border-radius: var(--g-r-sm) 0 0 var(--g-r-sm);
+}
+.btn-group .btn:last-child {
+  border-radius: 0 var(--g-r-sm) var(--g-r-sm) 0;
+}
+
+/* 首页 CTA 幽灵按钮 */
+.main-button {
+  border-radius: var(--g-r-pill);
+  transition: transform var(--g-t-fast) var(--g-spring),
+              background var(--g-t) var(--g-ease),
+              box-shadow var(--g-t) var(--g-ease),
+              border-color var(--g-t) var(--g-ease);
+}
+.main-button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: var(--g-shadow-md);
+}
+
+/* 首页副标题：白字叠浅色背景，必须压深 */
+.splash-subhead {
+  font-weight: 500;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+.splash-head {
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+/* ============ 5. 表单：圆角 + 聚焦光晕 ============ */
+.form-control,
+.custom-select {
+  border-radius: var(--g-r-sm);
+  border: 1px solid rgba(15, 23, 42, 0.10);
+  background: rgba(255, 255, 255, 0.74);
+  transition: border-color var(--g-t) var(--g-ease),
+              box-shadow var(--g-t) var(--g-ease),
+              background var(--g-t) var(--g-ease);
+}
+.form-control:focus,
+.custom-select:focus {
+  border-color: rgba(23, 162, 184, 0.55);
+  box-shadow: var(--g-glow);
+  background: #fff;
+}
+.input-group-text {
+  border-radius: var(--g-r-sm);
+  border-color: rgba(15, 23, 42, 0.10);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* ============ 6. 下拉菜单 / 弹窗：玻璃浮层 ============ */
+.dropdown-menu {
+  border: 1px solid var(--g-hairline);
+  border-radius: var(--g-r-md);
+  background: var(--g-glass-strong);
+  -webkit-backdrop-filter: blur(var(--g-blur)) saturate(var(--g-sat));
+  backdrop-filter: blur(var(--g-blur)) saturate(var(--g-sat));
+  box-shadow: var(--g-shadow-md);
+  padding: 6px;
+  overflow: hidden;
+}
+.dropdown-item {
+  border-radius: var(--g-r-xs);
+  transition: background var(--g-t-fast) var(--g-ease), transform var(--g-t-fast) var(--g-ease);
+}
+.dropdown-item:hover {
+  transform: translateX(2px);
+}
+.dropdown-divider {
+  border-top-color: rgba(15, 23, 42, 0.06);
+}
+
+.modal-content {
+  border: 1px solid var(--g-hairline);
+  border-radius: var(--g-r-xl);
+  background: var(--g-glass-strong);
+  -webkit-backdrop-filter: blur(28px) saturate(var(--g-sat));
+  backdrop-filter: blur(28px) saturate(var(--g-sat));
+  box-shadow: var(--g-shadow-lg);
+  overflow: hidden;
+}
+.modal-header,
+.modal-footer {
+  border-color: rgba(15, 23, 42, 0.06);
+}
+
+/* ============ 7. 表格 / 徽章 / 分页 ============ */
+.table {
+  border-radius: var(--g-r-md);
+  overflow: hidden;
+}
+.table thead th {
+  border-bottom-width: 1px;
+  border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+.badge {
+  border-radius: var(--g-r-pill);
+  padding: 4px 10px;
+  font-weight: 500;
+}
+.page-link {
+  border-radius: var(--g-r-xs) !important;
+  margin: 0 3px;
+  border-color: rgba(15, 23, 42, 0.08);
+  transition: transform var(--g-t-fast) var(--g-spring), box-shadow var(--g-t-fast) var(--g-ease);
+}
+.page-link:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--g-shadow-xs);
+}
+
+/* 面包屑 */
+.breadcrumb {
+  border-radius: var(--g-r-pill);
+  background: var(--g-glass-faint);
+  padding: 6px 16px;
+  width: fit-content;
+}
+
+/* ============ 7b. 选项卡（用户中心 / 衣柜 / 后台） ============ */
+.nav-tabs {
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+.nav-tabs .nav-item {
+  margin-bottom: -1px;
+}
+.nav-tabs .nav-link {
+  border: 1px solid transparent;
+  border-radius: var(--g-r-sm) var(--g-r-sm) 0 0;
+  transition: background var(--g-t-fast) var(--g-ease),
+              color var(--g-t-fast) var(--g-ease),
+              transform var(--g-t-fast) var(--g-ease);
+}
+.nav-tabs .nav-link:hover {
+  background: var(--g-glass-faint);
+  border-color: transparent;
+}
+.nav-tabs .nav-link.active {
+  background: var(--g-glass-strong);
+  border-color: var(--g-hairline);
+  border-bottom-color: transparent;
+}
+.nav-pills .nav-link {
+  border-radius: var(--g-r-pill);
+  transition: background var(--g-t-fast) var(--g-ease),
+              transform var(--g-t-fast) var(--g-ease);
+}
+.nav-pills .nav-link:hover {
+  transform: translateY(-1px);
+}
+
+/* 登录页 */
+.login-box .card,
+.login-card-body {
+  border-radius: var(--g-r-xl);
+}
+.login-logo a {
+  color: var(--g-ink) !important;
+  transition: transform var(--g-t) var(--g-spring), color var(--g-t) var(--g-ease);
+}
+.login-logo a:hover {
+  transform: scale(1.04);
+  color: #0f766e !important;
+}
+
+/* ============ 8. 入场动效（含错峰） ============ */
+@keyframes g-fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes g-scale-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.content-header,
+.card,
+.info-box,
+.small-box,
+.login-box {
+  animation: g-fade-up var(--g-t-slow) var(--g-ease-out) both;
+}
+
+.row > div:nth-child(1) .card,
+.row > div:nth-child(1).card { animation-delay: 0.00s; }
+.row > div:nth-child(2) .card,
+.row > div:nth-child(2).card { animation-delay: 0.07s; }
+.row > div:nth-child(3) .card,
+.row > div:nth-child(3).card { animation-delay: 0.14s; }
+.row > div:nth-child(4) .card,
+.row > div:nth-child(4).card { animation-delay: 0.21s; }
+
+/* 弹窗内容缩放淡入 */
+.modal.show .modal-dialog {
+  animation: g-scale-in var(--g-t) var(--g-ease-out) both;
+}
+
+/* ============ 9. 暗色模式 ============ */
+body.dark-mode {
+  --g-glass: rgba(30, 41, 59, 0.62);
+  --g-glass-strong: rgba(30, 41, 59, 0.85);
+  --g-glass-faint: rgba(255, 255, 255, 0.08);
+  --g-hairline: rgba(255, 255, 255, 0.12);
+  --g-ink: #e2e8f0;
+  background-color: #0f172a;
+  background-image:
+    radial-gradient(circle at 10% 15%, rgba(23, 162, 184, 0.26), transparent 45%),
+    radial-gradient(circle at 90% 10%, rgba(111, 66, 193, 0.22), transparent 42%),
+    radial-gradient(circle at 78% 88%, rgba(232, 62, 140, 0.16), transparent 48%);
+}
+body.dark-mode .main-header.navbar .nav-link,
+body.dark-mode nav.navbar .nav-link,
+body.dark-mode .navbar-brand,
+body.dark-mode .brand-link,
+body.dark-mode .brand-text {
+  color: var(--g-ink) !important;
+}
+body.dark-mode .form-control,
+body.dark-mode .custom-select {
+  background: rgba(15, 23, 42, 0.5);
+  color: var(--g-ink);
+}
+
+/* ============ 10. 无障碍：尊重减弱动效偏好 ============ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
