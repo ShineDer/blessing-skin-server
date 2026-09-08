@@ -14,12 +14,13 @@ RUN composer install \
     --no-interaction \
     --ignore-platform-reqs
 
-FROM node:alpine as frontend
+FROM node:22-alpine as frontend
 
 WORKDIR /app
 
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+# 新版 node 镜像不再预装 yarn，按 packageManager 字段显式安装
+RUN npm install -g yarn@1.22.22 && yarn install --frozen-lockfile
 
 COPY postcss.config.js tsconfig.build.json tsconfig.json webpack.config.ts ./
 COPY tools/*Plugin.ts ./tools/
@@ -65,7 +66,8 @@ FROM php:8.3-apache
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/install-php-extensions && \
-    install-php-extensions gd zip
+    # pdo_mysql: 连接 MySQL；imagick: Blessing Skin 图像处理必需
+    install-php-extensions gd zip pdo_mysql imagick
 
 WORKDIR /app
 
