@@ -2,10 +2,8 @@
 # 架构：1Panel OpenResty (80/443) -> 本编排 app 容器 (127.0.0.1:8080) -> db 容器 (MariaDB)
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: blessing-skin-server:local
+    # 镜像由 GitHub Actions 构建并推送到 GHCR，本机直接拉取运行
+    image: ghcr.io/shineder/blessing-skin-server:latest
     container_name: blessing-skin
     restart: unless-stopped
     ports:
@@ -14,7 +12,7 @@ services:
     environment:
       APP_ENV: production
       APP_DEBUG: "false"
-      APP_URL: http://127.0.0.1:8080
+      APP_URL: http://64.90.30.126
       # 覆盖镜像内默认的 SQLite 配置（Laravel 中真实环境变量优先于 .env）
       DB_CONNECTION: mysql
       DB_HOST: db
