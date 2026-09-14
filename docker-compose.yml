@@ -1,5 +1,6 @@
 # Blessing Skin Server 生产部署编排
-# 架构：1Panel OpenResty (80/443) -> 本编排 app 容器 (127.0.0.1:8080) -> db 容器 (MariaDB)
+# 架构：app 容器直接对外监听 5294 -> db 容器 (MariaDB)
+# 说明：站点原经 1Panel OpenResty 代理于 80 端口，后迁至直连 5294 以让出 80
 services:
   app:
     # 镜像由 GitHub Actions 构建并推送到 GHCR，本机直接拉取运行
@@ -8,11 +9,11 @@ services:
     restart: unless-stopped
     ports:
       # 仅绑定本机回环地址，外部访问经由 1Panel 反向代理
-      - "127.0.0.1:8080:80"
+      - "5294:80"
     environment:
       APP_ENV: production
       APP_DEBUG: "false"
-      APP_URL: http://64.90.30.126
+      APP_URL: http://64.90.30.126:5294
       # 覆盖镜像内默认的 SQLite 配置（Laravel 中真实环境变量优先于 .env）
       DB_CONNECTION: mysql
       DB_HOST: db
