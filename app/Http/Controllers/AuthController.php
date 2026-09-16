@@ -40,8 +40,7 @@ class AuthController extends Controller
             'rows' => $rows,
             'extra' => [
                 'tooManyFails' => cache(sha1('login_fails_'.$ip)) > 3,
-                'recaptcha' => option('recaptcha_sitekey'),
-                'invisible' => (bool) option('recaptcha_invisible'),
+                'turnstile' => option('turnstile_sitekey'),
             ],
         ]);
     }
@@ -84,7 +83,8 @@ class AuthController extends Controller
         $loginFailsCacheKey = sha1('login_fails_'.$ip);
         $loginFails = (int) Cache::get($loginFailsCacheKey, 0);
 
-        if ($loginFails > 3) {
+        // 失败次数过多，或站点启用了 Turnstile 时，强制校验验证码
+        if ($loginFails > 3 || option('turnstile_secretkey')) {
             $request->validate(['captcha' => ['required', $captcha]]);
         }
 
@@ -141,8 +141,7 @@ class AuthController extends Controller
             'rows' => $rows,
             'extra' => [
                 'player' => (bool) option('register_with_player_name'),
-                'recaptcha' => option('recaptcha_sitekey'),
-                'invisible' => (bool) option('recaptcha_invisible'),
+                'turnstile' => option('turnstile_sitekey'),
             ],
         ]);
     }
@@ -235,8 +234,7 @@ class AuthController extends Controller
         if (config('mail.default') != '') {
             return view('auth.forgot', [
                 'extra' => [
-                    'recaptcha' => option('recaptcha_sitekey'),
-                    'invisible' => (bool) option('recaptcha_invisible'),
+                    'turnstile' => option('turnstile_sitekey'),
                 ],
             ]);
         } else {

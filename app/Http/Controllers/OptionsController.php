@@ -210,14 +210,13 @@ class OptionsController extends Controller
             $form->textarea('meta_extras')->rows(6);
         })->handle();
 
-        $recaptcha = Option::form('recaptcha', 'reCAPTCHA', function ($form) {
-            $form->text('recaptcha_sitekey', 'sitekey');
-            $form->text('recaptcha_secretkey', 'secretkey');
-            $form->checkbox('recaptcha_invisible')->label();
+        $turnstile = Option::form('turnstile', 'Cloudflare Turnstile', function ($form) {
+            $form->text('turnstile_sitekey', 'sitekey');
+            $form->text('turnstile_secretkey', 'secretkey');
         })->handle();
 
         return view('admin.options')
-            ->with('forms', compact('general', 'announ', 'meta', 'recaptcha'));
+            ->with('forms', compact('general', 'announ', 'meta', 'turnstile'));
     }
 
     public function resource(Request $request)

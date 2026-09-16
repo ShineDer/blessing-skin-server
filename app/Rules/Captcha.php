@@ -11,6 +11,20 @@ class Captcha implements Rule
 {
     public function passes($attribute, $value)
     {
+        $turnstileSecret = option('turnstile_secretkey');
+        if ($turnstileSecret) {
+            $response = Http::asForm()
+                ->withOptions(['verify' => CaBundle::getSystemCaRootBundlePath()])
+                ->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+                    'secret' => $turnstileSecret,
+                    'response' => $value,
+                    'remoteip' => request()?->ip(),
+                ])
+                ->json();
+
+            return (bool) ($response['success'] ?? false);
+        }
+
         $secretkey = option('recaptcha_secretkey');
         if ($secretkey) {
             return Http::asForm()
@@ -29,6 +43,10 @@ class Captcha implements Rule
 
     public function message()
     {
+        if (option('turnstile_secretkey')) {
+            return trans('validation.turnstile');
+        }
+
         return option('recaptcha_secretkey')
             ? trans('validation.recaptcha')
             : trans('validation.captcha');

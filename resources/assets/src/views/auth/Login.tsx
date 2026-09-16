@@ -36,8 +36,8 @@ const Login: React.FC = () => {
   const [isPending, setIsPending] = useState(false)
   const [warningMessage, setWarningMessage] = useState('')
   const ref = useRef<Captcha | null>(null)
-  const recaptcha = useBlessingExtra<string>('recaptcha')
-  const invisibleRecaptcha = useBlessingExtra<boolean>('invisible')
+  const turnstile = useBlessingExtra<string>('turnstile')
+  const showCaptcha = Boolean(turnstile) || hasTooManyFails
 
   useEmitMounted()
 
@@ -61,7 +61,7 @@ const Login: React.FC = () => {
       identification,
       password,
       keep: remember,
-      captcha: hasTooManyFails ? await ref.current!.execute() : undefined,
+      captcha: showCaptcha ? await ref.current!.execute() : undefined,
     })
 
     if (isSuccessfulResponse(response)) {
@@ -74,15 +74,8 @@ const Login: React.FC = () => {
       // only notify user if he/she fails too much at the first time
       if (response.data.login_fails > 3 && !hasTooManyFails) {
         setHasTooManyFails(true)
-        if (recaptcha) {
-          // no need to notify if using invisible recaptcha
-          if (!invisibleRecaptcha) {
-            showModal({
-              mode: 'alert',
-              text: t('auth.tooManyFails.recaptcha'),
-            })
-          }
-        } else {
+        // Turnstile 已常驻页面，无需额外弹窗提示
+        if (!turnstile) {
           showModal({
             mode: 'alert',
             text: t('auth.tooManyFails.captcha'),
@@ -119,7 +112,7 @@ const Login: React.FC = () => {
         </div>
       </div>
 
-      {hasTooManyFails && <Captcha ref={ref} />}
+      {showCaptcha && <Captcha ref={ref} />}
 
       <Alert type="warning">{warningMessage}</Alert>
 

@@ -43,6 +43,9 @@ return [
     'meta_description' => '',
     'meta_extras' => '',
     'cdn_address' => '',
+    'turnstile_sitekey' => '',
+    'turnstile_secretkey' => '',
+    // 兼容旧 reCAPTCHA 配置（不再在后台暴露，仅保留校验分支）
     'recaptcha_sitekey' => '',
     'recaptcha_secretkey' => '',
     'recaptcha_invisible' => 'false',
