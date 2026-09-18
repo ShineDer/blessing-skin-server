@@ -1,5 +1,5 @@
 # Blessing Skin Server 生产部署编排
-# 架构：app 容器直接对外监听 5294 -> db 容器 (MariaDB)
+# 架构：app 容器直接对外监听 5294 -> db 容器 (MySQL)
 # 说明：站点原经 1Panel OpenResty 代理于 80 端口，后迁至直连 5294 以让出 80
 services:
   app:
@@ -34,7 +34,7 @@ services:
       - blessing-net
 
   db:
-    image: mariadb:10.11
+    image: mysql:8.4
     container_name: blessing-db
     restart: unless-stopped
     environment:

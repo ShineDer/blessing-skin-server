@@ -14,7 +14,7 @@ RUN composer install \
     --no-interaction \
     --ignore-platform-reqs
 
-FROM node:22-alpine as frontend
+FROM node:24-alpine as frontend
 
 WORKDIR /app
 
@@ -61,7 +61,7 @@ RUN composer dump-autoload -o --no-dev -n && \
     sed 's/DB_CONNECTION=mysql/DB_CONNECTION=sqlite/' -i storage/.env && \
     sed 's/DB_DATABASE=blessingskin/DB_DATABASE=\/app\/storage\/database\.db/' -i storage/.env
 
-FROM php:8.3-apache
+FROM php:8.3-fpm-alpine
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
