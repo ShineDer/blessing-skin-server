@@ -5,6 +5,7 @@ no-unread: 无未读通知
 notifications:
   title: 站内通知
   mark-all-read: 全部标记为已读
+  mark-unread: 标记为未读
   mark-all-read-warning: 确定要将全部通知标记为已读吗？此操作可能导致你忽视部分重要通知。
   delete-warning: 确定要删除这条通知吗？删除后不可恢复。
   retention: 自动删除已读通知：

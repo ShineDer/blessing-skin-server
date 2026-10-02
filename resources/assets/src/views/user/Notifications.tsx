@@ -56,6 +56,11 @@ const Notifications: React.FC = () => {
     setBusy(false)
   }
 
+  const markUnread = async (id: string) => {
+    await fetch.post(`/user/notifications/${id}/unread`)
+    setPage((old) => ({ ...old, data: old.data.map((item) => item.id === id ? { ...item, read: false, read_at: null } : item) }))
+  }
+
   const remove = async (id: string) => {
     if (!(await confirm(t('user.notifications.delete-warning')))) return
     await fetch.del(`/user/notifications/${id}`)
@@ -85,7 +90,7 @@ const Notifications: React.FC = () => {
       <button className="btn btn-sm btn-outline-primary" disabled={busy} onClick={() => void markAllRead()}>{t('user.notifications.mark-all-read')}</button>
     </div>
     <div className="card-body p-0">
-      {loading ? <p className="text-center p-4">...</p> : page.data.length === 0 ? <p className="text-center text-muted p-4">一片空白，连一缕阳光也不曾留下~<br /><small>有新的通知时会显示在这里</small></p> : <div className="list-group list-group-flush">{page.data.map((notification) => <div className={`list-group-item d-flex justify-content-between ${notification.read_at || notification.read ? '' : 'font-weight-bold'}`} key={notification.id}><button className="btn btn-link text-left p-0" onClick={() => void read(notification)}>{notification.title}</button><button className="btn btn-sm btn-link text-danger" aria-label="Delete" onClick={() => void remove(notification.id)}>&times;</button></div>)}</div>}
+      {loading ? <p className="text-center p-4">...</p> : page.data.length === 0 ? <p className="text-center text-muted p-4">一片空白，连一缕阳光也不曾留下~<br /><small>有新的通知时会显示在这里</small></p> : <div className="list-group list-group-flush">{page.data.map((notification) => <div className={`list-group-item d-flex justify-content-between ${notification.read_at || notification.read ? '' : 'font-weight-bold'}`} key={notification.id}><button className="btn btn-link text-left p-0" onClick={() => void read(notification)}>{notification.title}</button><div><button className="btn btn-sm btn-link" onClick={() => void markUnread(notification.id)}>{t('user.notifications.mark-unread')}</button><button className="btn btn-sm btn-link text-danger" aria-label="Delete" onClick={() => void remove(notification.id)}>&times;</button></div></div>)}</div>}
     </div>
     <div className="card-footer"><Pagination page={page.current_page} totalPages={page.last_page} onChange={(next) => void load(next)} /></div>
   </div>

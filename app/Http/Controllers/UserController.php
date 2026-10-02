@@ -71,7 +71,16 @@ class UserController extends Controller
             ],
             'announcement' => $converter->convertToHtml(option_localized('announcement')),
             'grid' => $grid,
-            'extra' => ['unverified' => option('require_verification') && !$user->verified],
+            'extra' => [
+                'unverified' => option('require_verification') && !$user->verified,
+                'popupNotifications' => $user->unreadNotifications
+                    ->filter(fn ($notification) => (bool) ($notification->data['popup_enabled'] ?? false))
+                    ->map(fn ($notification) => [
+                        'id' => $notification->id,
+                        'title' => $notification->data['title'] ?? '',
+                        'content' => $notification->data['content_html'] ?? $notification->data['content'] ?? '',
+                    ])->values(),
+            ],
         ]);
     }
 
