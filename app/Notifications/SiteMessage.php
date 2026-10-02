@@ -16,10 +16,13 @@ class SiteMessage extends Notification implements ShouldQueue
 
     public $content;
 
-    public function __construct(string $title, $content = '')
+    public $metadata;
+
+    public function __construct(string $title, $content = '', array $metadata = [])
     {
         $this->title = $title;
         $this->content = $content;
+        $this->metadata = $metadata;
     }
 
     /**
@@ -42,6 +45,7 @@ class SiteMessage extends Notification implements ShouldQueue
         return [
             'title' => $this->title,
             'content' => $this->content,
+            ...$this->metadata,
         ];
     }
 }

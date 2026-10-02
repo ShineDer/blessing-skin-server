@@ -50,7 +50,13 @@ Route::prefix('user')
     ->middleware(['authorize'])
     ->group(function () {
         Route::get('', 'UserController@index')->name('home');
+        Route::get('notifications', 'NotificationsController@history')->name('notifications.history');
         Route::post('notifications/{id}', 'NotificationsController@read')->name('notification.read');
+        Route::post('notifications/{id}/read', 'NotificationsController@markRead')->name('notifications.read');
+        Route::post('notifications/{id}/unread', 'NotificationsController@markUnread')->name('notifications.unread');
+        Route::post('notifications/read-all', 'NotificationsController@readAll')->name('notifications.read-all');
+        Route::delete('notifications/{id}', 'NotificationsController@delete')->name('notifications.delete');
+        Route::post('notifications/bulk-delete', 'NotificationsController@bulkDelete')->name('notifications.bulk-delete');
         Route::get('score-info', 'UserController@scoreInfo')->name('score');
         Route::post('sign', 'UserController@sign')->name('sign');
 
