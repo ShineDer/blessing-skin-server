@@ -15,10 +15,14 @@ notifications:
     title: Receiver
     all: All Users
     normal: Normal Users
+    verified: Verified Users
     uid: Specified UID
     email: Specified Email
   title: Title
   content: Content (Markdown is supported.)
+  popup-enabled: Show as a popup
+  public-days: Public period (days)
+  public-days-help: When enabled, eligible users see this notification popup once during this period.
 
 users:
   operations:

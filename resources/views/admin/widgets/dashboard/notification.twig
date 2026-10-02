@@ -28,6 +28,12 @@
         </div>
         <div class="radio">
           <label>
+            <input type="radio" name="receiver" value="verified" required>
+            {{ trans('admin.notifications.receiver.verified') }}
+          </label>
+        </div>
+        <div class="radio">
+          <label>
             <input type="radio" name="receiver" value="uid" required>
             {{ trans('admin.notifications.receiver.uid') }} &nbsp;
             <input type="number" name="uid" class="form-control">
@@ -43,12 +49,35 @@
       </div>
       <div class="form-group">
         <label>{{ trans('admin.notifications.title') }}</label>
-        <input type="text" name="title" class="form-control" required>
+        <input type="text" name="title" class="form-control" required maxlength="20">
       </div>
       <div class="form-group">
         <label>{{ trans('admin.notifications.content') }}</label>
         <textarea name="content" class="form-control" rows="3"></textarea>
       </div>
+      <div class="form-group">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="notification-popup" name="popup_enabled" value="1">
+          <label class="custom-control-label" for="notification-popup">{{ trans('admin.notifications.popup-enabled') }}</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="notification-public-days">{{ trans('admin.notifications.public-days') }}</label>
+        <input type="number" id="notification-public-days" name="public_days" class="form-control" min="0" max="365" value="0" disabled>
+        <small class="form-text text-muted">{{ trans('admin.notifications.public-days-help') }}</small>
+      </div>
+      <script>
+        (function () {
+          var popup = document.getElementById('notification-popup')
+          var days = document.getElementById('notification-public-days')
+          if (popup && days) {
+            popup.addEventListener('change', function () {
+              days.disabled = !popup.checked
+              if (days.disabled) days.value = '0'
+            })
+          }
+        })()
+      </script>
     </div>
     <div class="card-footer">
       <input
