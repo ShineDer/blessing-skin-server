@@ -88,3 +88,30 @@
     </div>
   </form>
 </div>
+
+<div class="card mt-3" data-sent-notifications>
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h3 class="card-title">{{ trans('admin.notifications.sent.title') }}</h3>
+    <button type="button" class="btn btn-sm btn-outline-secondary" data-sent-refresh>{{ trans('general.refresh') }}</button>
+  </div>
+  <div class="card-body p-0"><div class="table-responsive"><table class="table table-hover mb-0"><thead><tr><th>{{ trans('admin.notifications.title') }}</th><th>{{ trans('admin.notifications.sent.audience') }}</th><th>{{ trans('admin.notifications.sent.time') }}</th><th>{{ trans('admin.notifications.sent.status') }}</th><th></th></tr></thead><tbody data-sent-rows><tr><td colspan="5" class="text-center text-muted">{{ trans('general.loading') }}</td></tr></tbody></table></div></div>
+  <div class="card-footer d-flex justify-content-between"><button type="button" class="btn btn-sm btn-link" data-sent-prev disabled>{{ trans('vendor.datatable.prev') }}</button><span data-sent-page>1</span><button type="button" class="btn btn-sm btn-link" data-sent-next disabled>{{ trans('vendor.datatable.next') }}</button></div>
+</div>
+<script>
+(function () {
+  var root = document.querySelector('[data-sent-notifications]'); if (!root) return
+  var rows = root.querySelector('[data-sent-rows]'), pageLabel = root.querySelector('[data-sent-page]'), page = 1
+  var csrf = document.querySelector('meta[name="csrf-token"]')
+  function escapeHtml(value) { var el = document.createElement('span'); el.textContent = value == null ? '' : value; return el.innerHTML }
+  function load(target) {
+    fetch('{{ url('/admin/notifications') }}?page=' + target, { headers: { Accept: 'application/json' } }).then(function (response) { return response.json() }).then(function (result) {
+      page = result.current_page || target; rows.innerHTML = ''
+      ;(result.data || []).forEach(function (item) { var tr = document.createElement('tr'), revoke = item.status === 'published'; tr.innerHTML = '<td>' + escapeHtml(item.title) + '</td><td>' + escapeHtml(item.audience) + '</td><td>' + escapeHtml(item.published_at || item.created_at) + '</td><td>' + escapeHtml(item.status) + '</td><td>' + (revoke ? '<button class="btn btn-sm btn-outline-danger" data-revoke="' + escapeHtml(item.id) + '">{{ trans('admin.notifications.sent.revoke') }}</button>' : '') + '</td>'; rows.appendChild(tr) })
+      if (!rows.children.length) rows.innerHTML = '<tr><td colspan="5" class="text-center text-muted">{{ trans('admin.notifications.sent.empty') }}</td></tr>'
+      pageLabel.textContent = page; root.querySelector('[data-sent-prev]').disabled = page <= 1; root.querySelector('[data-sent-next]').disabled = page >= (result.last_page || page)
+    })
+  }
+  rows.addEventListener('click', function (event) { var button = event.target.closest('[data-revoke]'); if (!button || !window.confirm('{{ trans('admin.notifications.sent.revoke-confirm') }}')) return; fetch('{{ url('/admin/notifications') }}/' + button.dataset.revoke + '/revoke', { method: 'POST', headers: { 'X-CSRF-TOKEN': csrf ? csrf.content : '', Accept: 'application/json' } }).then(function (response) { if (response.ok) load(page) }) })
+  root.querySelector('[data-sent-prev]').addEventListener('click', function () { if (page > 1) load(page - 1) }); root.querySelector('[data-sent-next]').addEventListener('click', function () { load(page + 1) }); root.querySelector('[data-sent-refresh]').addEventListener('click', function () { load(page) }); load(page)
+})()
+</script>
