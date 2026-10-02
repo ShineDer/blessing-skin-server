@@ -22,6 +22,14 @@ notifications:
   content: 内容（可使用 Markdown）
   sent:
     title: 已发送通知
+    audience: 接受者
+    time: 发送时间
+    status: 状态
+    revoke: 撤回
+    revoke-confirm: 确定要撤回这条通知吗？撤回后将从所有用户的通知列表中删除，且无法恢复。
+    empty: 暂无已发送通知
+  sent:
+    title: 已发送通知
     audience: 接收对象
     time: 发送时间
     status: 状态

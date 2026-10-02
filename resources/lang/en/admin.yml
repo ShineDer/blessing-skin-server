@@ -26,6 +26,14 @@ notifications:
     time: Sent at
     status: Status
     revoke: Revoke
+    revoke-confirm: Revoke this notification campaign? It will be removed from all users and cannot be restored.
+    empty: No sent notifications.
+  sent:
+    title: Sent notifications
+    audience: Audience
+    time: Sent at
+    status: Status
+    revoke: Revoke
     revoke-confirm: Revoke this notification campaign?
     empty: No sent notifications.
   popup-enabled: Show as a popup
