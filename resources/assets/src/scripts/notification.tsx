@@ -12,7 +12,7 @@ if (container) {
 // The user dashboard exposes eligible campaign popups in blessing-extra.
 // Marking as read makes the popup idempotent across subsequent visits.
 const extra = document.querySelector<HTMLScriptElement>('#blessing-extra')
-if (extra?.textContent && window.location.pathname.replace(/^\\//, '') === 'user') {
+if (extra && extra.textContent && window.location.pathname.replace(/^\/+/, '') === 'user') {
   try {
     const popupNotifications = JSON.parse(extra.textContent).popupNotifications || []
     const showPopup = async (notification: { id: string; title: string; content: string }) => {
