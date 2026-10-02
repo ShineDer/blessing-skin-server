@@ -6,7 +6,13 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+    protected function schedule(\Illuminate\Console\Scheduling\Schedule $schedule): void
+    {
+        $schedule->command('notifications:expire')->hourly();
+    }
+
     protected $commands = [
+        Commands\ExpireNotificationCampaignsCommand::class,
         \Laravel\Passport\Console\KeysCommand::class,
         Commands\BsInstallCommand::class,
         Commands\OptionsCacheCommand::class,

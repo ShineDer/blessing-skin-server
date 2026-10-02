@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\NotificationCampaign;
 use App\Notifications;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use App\Services\NotificationHistoryService;
+use App\Services\NotificationCampaignService;
 use App\Services\NotificationMarkdownService;
 use League\CommonMark\GithubFlavoredMarkdownConverter;
 
@@ -15,12 +17,18 @@ class NotificationsController extends Controller
     public function send(Request $request)
     {
         $data = $request->validate([
-            'receiver' => 'required|in:all,normal,uid,email',
+            'receiver' => 'required|in:all,normal,verified,uid,email',
+            'popup_enabled' => 'boolean',
+            'public_days' => 'integer|min:0|max:365',
             'uid' => 'required_if:receiver,uid|nullable|integer|exists:users',
             'email' => 'required_if:receiver,email|nullable|email|exists:users',
             'title' => 'required|max:20',
             'content' => 'string|nullable',
         ]);
+
+        $campaignResult = app(NotificationCampaignService::class)->send($data, auth()->user());
+        session(['sentResult' => trans('admin.notifications.send.success')]);
+        return redirect('/admin');
 
         $notification = new Notifications\SiteMessage($data['title'], $data['content']);
 
@@ -43,6 +51,24 @@ class NotificationsController extends Controller
         session(['sentResult' => trans('admin.notifications.send.success')]);
 
         return redirect('/admin');
+    }
+
+    public function campaigns()
+    {
+        return NotificationCampaign::withCount(['runs'])->latest()->paginate(20);
+    }
+
+    public function revokeCampaign($id, NotificationCampaignService $service)
+    {
+        $service->revoke(\App\Models\NotificationCampaign::findOrFail($id));
+        return response()->noContent();
+    }
+
+    public function reopenCampaign($id, Request $request, NotificationCampaignService $service)
+    {
+        $data = $request->validate(['user_ids' => 'array', 'user_ids.*' => 'integer']);
+        $service->reopen(\App\Models\NotificationCampaign::findOrFail($id), $data['user_ids'] ?? []);
+        return response()->noContent();
     }
 
     public function all()

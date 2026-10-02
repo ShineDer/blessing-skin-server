@@ -130,6 +130,9 @@ Route::prefix('admin')
         Route::get('', 'AdminController@index')->name('view');
         Route::get('chart', 'AdminController@chartData')->name('chart');
         Route::post('notifications/send', 'NotificationsController@send')->name('notification.send');
+        Route::get('notifications', 'NotificationsController@campaigns')->name('notifications.list');
+        Route::post('notifications/{id}/revoke', 'NotificationsController@revokeCampaign')->name('notifications.revoke');
+        Route::post('notifications/{id}/reopen', 'NotificationsController@reopenCampaign')->name('notifications.reopen');
 
         Route::any('customize', 'OptionsController@customize')->name('customize');
         Route::any('score', 'OptionsController@score')->name('score');
