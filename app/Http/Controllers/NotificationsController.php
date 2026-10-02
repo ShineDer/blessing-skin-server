@@ -97,13 +97,8 @@ class NotificationsController extends Controller
 
     public function read($id)
     {
-        $notification = auth()
-            ->user()
-            ->unreadNotifications
-            ->first(fn ($notification) => $notification->id === $id);
+        $notification = auth()->user()->notifications()->whereKey($id)->firstOrFail();
         $notification->markAsRead();
-
-        $converter = new GithubFlavoredMarkdownConverter();
 
         return [
             'title' => $notification->data['title'] ?? '',
