@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import * as fetch from '@/scripts/net'
-import { showModal } from '@/scripts/notify'
+import { showModal, toast } from '@/scripts/notify'
 import Pagination from '@/components/Pagination'
 import { t } from '@/scripts/i18n'
 
@@ -20,6 +20,16 @@ const Notifications: React.FC = () => {
   const [page, setPage] = useState<Page>({ data: [], current_page: 1, last_page: 1 })
   const [loading, setLoading] = useState(true)
   const [busy, setBusy] = useState(false)
+  const [retention, setRetention] = useState('0')
+
+  const confirm = async (text: string) => {
+    try {
+      await showModal({ mode: 'confirm', text })
+      return true
+    } catch {
+      return false
+    }
+  }
 
   const load = async (current = 1) => {
     setLoading(true)
@@ -39,24 +49,43 @@ const Notifications: React.FC = () => {
   }
 
   const markAllRead = async () => {
+    if (!(await confirm(t('user.notifications.mark-all-read-warning')))) return
     setBusy(true)
     await fetch.post('/user/notifications/read-all')
-    setPage((old) => ({ ...old, data: old.data.map((item) => ({ ...item, read: true, read_at: item.read_at || new Date().toISOString() })) }))
+    setPage((old) => ({ ...old, data: old.data.map((item) => ({ ...item, read: true, read_at: new Date().toISOString() })) }))
     setBusy(false)
   }
 
   const remove = async (id: string) => {
+    if (!(await confirm(t('user.notifications.delete-warning')))) return
     await fetch.del(`/user/notifications/${id}`)
     setPage((old) => ({ ...old, data: old.data.filter((item) => item.id !== id) }))
   }
 
+  const updateRetention = async (value: string) => {
+    const days = Number(value)
+    if (days > 0 && !(await confirm(t('user.notifications.retention-warning')))) return
+    setRetention(value)
+    await fetch.post('/user/notifications/retention', { days })
+    toast.success(t('user.notifications.retention-saved'))
+  }
+
   return <div className="card">
     <div className="card-header d-flex justify-content-between align-items-center">
-      <h3 className="card-title">{t('user.notifications.title')}</h3>
+      <div>
+        <h3 className="card-title">{t('user.notifications.title')}</h3>
+        <label className="d-block small text-muted mb-0">
+          {t('user.notifications.retention')}
+          <select className="ml-2" value={retention} onChange={(event) => void updateRetention(event.target.value)}>
+            <option value="0">{t('user.notifications.retention-forever')}</option>
+            {[30, 90, 180, 365, 730].map((days) => <option key={days} value={days}>{days} {t('user.notifications.days')}</option>)}
+          </select>
+        </label>
+      </div>
       <button className="btn btn-sm btn-outline-primary" disabled={busy} onClick={() => void markAllRead()}>{t('user.notifications.mark-all-read')}</button>
     </div>
     <div className="card-body p-0">
-      {loading ? <p className="text-center p-4">...</p> : page.data.length === 0 ? <p className="text-center text-muted p-4">{t('user.no-unread')}</p> : <div className="list-group list-group-flush">{page.data.map((notification) => <div className={`list-group-item d-flex justify-content-between ${notification.read_at || notification.read ? '' : 'font-weight-bold'}`} key={notification.id}><button className="btn btn-link text-left p-0" onClick={() => void read(notification)}>{notification.title}</button><button className="btn btn-sm btn-link text-danger" aria-label="Delete" onClick={() => void remove(notification.id)}>&times;</button></div>)}</div>}
+      {loading ? <p className="text-center p-4">...</p> : page.data.length === 0 ? <p className="text-center text-muted p-4">一片空白，连一缕阳光也不曾留下~<br /><small>有新的通知时会显示在这里</small></p> : <div className="list-group list-group-flush">{page.data.map((notification) => <div className={`list-group-item d-flex justify-content-between ${notification.read_at || notification.read ? '' : 'font-weight-bold'}`} key={notification.id}><button className="btn btn-link text-left p-0" onClick={() => void read(notification)}>{notification.title}</button><button className="btn btn-sm btn-link text-danger" aria-label="Delete" onClick={() => void remove(notification.id)}>&times;</button></div>)}</div>}
     </div>
     <div className="card-footer"><Pagination page={page.current_page} totalPages={page.last_page} onChange={(next) => void load(next)} /></div>
   </div>
