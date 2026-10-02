@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class SiteMessage extends Notification implements ShouldQueue
+class SiteMessage extends Notification
 {
     use Queueable;
 

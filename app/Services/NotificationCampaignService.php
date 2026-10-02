@@ -21,7 +21,10 @@ class NotificationCampaignService
             'sender_id' => $sender?->uid,
             'title' => $data['title'], 'content' => $markdown,
             'content_html' => app(NotificationMarkdownService::class)->render($markdown),
-            'audience' => $data['receiver'], 'audience_snapshot' => $users->pluck('uid')->values()->all(),
+            'audience' => $data['receiver'],
+            'audience_snapshot' => $data['receiver'] === 'email'
+                ? $users->pluck('email')->values()->all()
+                : $users->pluck('uid')->values()->all(),
             'popup_enabled' => (bool) ($data['popup_enabled'] ?? false),
             'published_at' => now(), 'expires_at' => !empty($data['public_days']) ? now()->addDays((int) $data['public_days']) : null,
             'status' => 'published',
@@ -33,7 +36,13 @@ class NotificationCampaignService
             try {
                 $notification = new SiteMessage($campaign->title, $campaign->content, ['campaign_id' => $campaign->id, 'campaign_run_id' => $run->id, 'delivery_id' => $delivery->id, 'popup_enabled' => $campaign->popup_enabled, 'content_html' => $campaign->content_html]);
                 Notification::send($user, $notification);
-                $delivery->update(['delivered' => true, 'notification_id' => DB::table('notifications')->where('notifiable_id', $user->uid)->latest('created_at')->value('id')]);
+                $notificationId = DB::table('notifications')
+                    ->where('notifiable_id', $user->uid)
+                    ->where('type', SiteMessage::class)
+                    ->where('data', 'like', '%delivery_id%'.$delivery->id.'%')
+                    ->latest('created_at')
+                    ->value('id');
+                $delivery->update(['delivered' => true, 'notification_id' => $notificationId]);
             } catch (\Throwable $e) { $delivery->update(['failure_reason' => Str::limit($e->getMessage(), 1000)]); $failed[] = $user->uid; }
         }
         $run->update(['completed_at' => now(), 'status' => empty($failed) ? 'completed' : 'partial']);
@@ -69,8 +78,40 @@ class NotificationCampaignService
 
     public function reopen(NotificationCampaign $campaign, array $userIds = []): NotificationCampaignRun
     {
-        $run = $campaign->runs()->create(['run_number' => $campaign->runs()->max('run_number') + 1, 'mode' => 'reopen', 'audience_snapshot' => $userIds ?: $campaign->audience_snapshot, 'created_by' => auth()->id(), 'started_at' => now(), 'status' => 'completed']);
-        foreach ($userIds as $id) NotificationDelivery::firstOrCreate(['campaign_run_id' => $run->id, 'user_id' => $id], ['eligible' => true]);
-        $campaign->update(['status' => 'published', 'revoked_at' => null]); return $run;
+        abort_if($campaign->status === 'revoked', 422, 'Revoked campaigns cannot be reopened.');
+
+        $run = $campaign->runs()->create([
+            'run_number' => $campaign->runs()->max('run_number') + 1,
+            'mode' => 'reopen',
+            'audience_snapshot' => $userIds ?: $campaign->audience_snapshot,
+            'created_by' => auth()->id(),
+            'started_at' => now(),
+            'status' => 'running',
+        ]);
+        $campaign->update([
+            'status' => 'published',
+            'revoked_at' => null,
+            'published_at' => now(),
+            'expires_at' => $campaign->popup_enabled ? now()->addDays(1) : null,
+        ]);
+        return $run;
+    }
+
+    public function updatePublicity(NotificationCampaign $campaign, int $days): void
+    {
+        abort_unless($days >= 0 && $days <= 365, 422, 'Invalid publicity period.');
+        abort_if($campaign->status === 'revoked' || !$campaign->popup_enabled, 422, 'Campaign is not publicized.');
+
+        $expires = $days === 0 ? null : $campaign->published_at->copy()->addDays($days);
+        if ($expires !== null && $expires->lte(now())) {
+            $expires = now()->addDay();
+        }
+        $campaign->update(['expires_at' => $expires, 'status' => $expires ? 'published' : 'expired', 'popup_enabled' => (bool) $expires]);
+    }
+
+    public function endPublicity(NotificationCampaign $campaign): void
+    {
+        abort_if($campaign->status !== 'published' || !$campaign->popup_enabled, 422, 'Campaign is not publicized.');
+        $campaign->update(['status' => 'expired', 'popup_enabled' => false, 'expires_at' => now()]);
     }
 }

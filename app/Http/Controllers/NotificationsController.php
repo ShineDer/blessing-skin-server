@@ -67,7 +67,20 @@ class NotificationsController extends Controller
     public function reopenCampaign($id, Request $request, NotificationCampaignService $service)
     {
         $data = $request->validate(['user_ids' => 'array', 'user_ids.*' => 'integer']);
-        $service->reopen(\App\Models\NotificationCampaign::findOrFail($id), $data['user_ids'] ?? []);
+        $service->reopen(NotificationCampaign::findOrFail($id), $data['user_ids'] ?? []);
+        return response()->noContent();
+    }
+
+    public function updatePublicity($id, Request $request, NotificationCampaignService $service)
+    {
+        $data = $request->validate(['days' => 'required|integer|min:0|max:365']);
+        $service->updatePublicity(NotificationCampaign::findOrFail($id), (int) $data['days']);
+        return response()->noContent();
+    }
+
+    public function endPublicity($id, NotificationCampaignService $service)
+    {
+        $service->endPublicity(NotificationCampaign::findOrFail($id));
         return response()->noContent();
     }
 

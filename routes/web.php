@@ -134,6 +134,8 @@ Route::prefix('admin')
         Route::get('notifications', 'NotificationsController@campaigns')->name('notifications.list');
         Route::post('notifications/{id}/revoke', 'NotificationsController@revokeCampaign')->name('notifications.revoke');
         Route::post('notifications/{id}/reopen', 'NotificationsController@reopenCampaign')->name('notifications.reopen');
+        Route::post('notifications/{id}/publicity', 'NotificationsController@updatePublicity')->name('notifications.publicity');
+        Route::post('notifications/{id}/end-publicity', 'NotificationsController@endPublicity')->name('notifications.end-publicity');
 
         Route::any('customize', 'OptionsController@customize')->name('customize');
         Route::any('score', 'OptionsController@score')->name('score');

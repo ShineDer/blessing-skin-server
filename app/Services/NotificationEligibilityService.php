@@ -27,10 +27,12 @@ class NotificationEligibilityService
                     'content_html' => $campaign->content_html,
                 ]);
                 Notification::send($user, $notification);
-                $delivery->update([
-                    'delivered' => true,
-                    'notification_id' => $user->notifications()->latest('created_at')->value('id'),
-                ]);
+                $notificationId = $user->notifications()
+                    ->where('type', SiteMessage::class)
+                    ->where('data', 'like', '%delivery_id%'.$delivery->id.'%')
+                    ->latest('created_at')
+                    ->value('id');
+                $delivery->update(['delivered' => true, 'notification_id' => $notificationId]);
                 $count++;
             }
         }
@@ -39,6 +41,10 @@ class NotificationEligibilityService
 
     private function eligible(NotificationCampaign $campaign, NotificationCampaignRun $run, $user): bool
     {
+        if ($run->mode === 'reopen' && !in_array($user->uid, $run->audience_snapshot ?? [], true)) {
+            return false;
+        }
+
         if (in_array($campaign->audience, ['uid', 'email'], true)) {
             return in_array(
                 $campaign->audience === 'uid' ? $user->uid : $user->email,
