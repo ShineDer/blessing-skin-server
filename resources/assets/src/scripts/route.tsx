@@ -34,6 +34,11 @@ export default [
     module: [() => import('../views/user/profile/index')],
   },
   {
+    path: 'user/notifications',
+    react: () => import('../views/user/Notifications'),
+    el: '.content > .container-fluid',
+  },
+  {
     path: 'user/oauth/manage',
     react: () => import('../views/user/OAuth'),
     el: '.content > .container-fluid',

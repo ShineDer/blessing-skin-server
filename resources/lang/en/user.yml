@@ -1,6 +1,9 @@
 sign-success: Signed successfully. You got :score scores.
 announcement: Announcement
 no-unread: No new notifications.
+notifications:
+  title: Notifications
+  mark-all-read: Mark all as read
 
 verification:
   disabled: Email verification is not available.

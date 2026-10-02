@@ -2,6 +2,9 @@
 sign-success: 签到成功，获得了 :score 积分
 announcement: 公告
 no-unread: 无未读通知
+notifications:
+  title: 通知中心
+  mark-all-read: 全部标记为已读
 verification:
   disabled: 本站已关闭邮箱验证功能
   frequent-mail: 你邮件发送得太频繁啦，过 60 秒后再点发送吧

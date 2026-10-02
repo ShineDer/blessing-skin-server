@@ -5,6 +5,10 @@ import { showModal } from '@/scripts/notify'
 export type Notification = {
   id: string
   title: string
+  read?: boolean
+  read_at?: string | null
+  popup?: boolean
+  popup_seen?: boolean
 }
 
 const NotificationsList: React.FC = () => {
@@ -40,12 +44,18 @@ const NotificationsList: React.FC = () => {
         </>
       ),
     })
+    // Keep read notifications visible in the dropdown; only the badge changes.
     setNotifications((notifications) =>
-      notifications.filter((notification) => notification.id !== id),
+      notifications.map((notification) =>
+        notification.id === id
+          ? { ...notification, read: true, read_at: new Date().toISOString() }
+          : notification,
+      ),
     )
   }
 
-  const hasUnread = notifications.length > 0
+  const unreadCount = notifications.filter((notification) => !notification.read && !notification.read_at).length
+  const hasUnread = unreadCount > 0
 
   return (
     <>
@@ -53,7 +63,7 @@ const NotificationsList: React.FC = () => {
         <i className="far fa-bell"></i>
         {hasUnread && (
           <span className="badge badge-warning navbar-badge">
-            {notifications.length}
+            {unreadCount}
           </span>
         )}
       </a>

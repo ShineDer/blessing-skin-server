@@ -14,6 +14,7 @@ $menu['user'] = [
     ['title' => 'general.player-manage',  'link' => 'user/player',  'icon' => 'fa-users'],
     ['title' => 'general.my-reports',     'link' => 'user/reports', 'icon' => 'fa-flag'],
     ['title' => 'general.profile',        'link' => 'user/profile', 'icon' => 'fa-user'],
+    ['title' => 'general.notifications',  'link' => 'user/notifications', 'icon' => 'fa-bell'],
     [
         'title' => 'general.developer',
         'icon' => 'fa-code-branch',
