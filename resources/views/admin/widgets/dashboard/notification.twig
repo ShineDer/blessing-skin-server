@@ -106,12 +106,18 @@
   function load(target) {
     fetch('{{ url('/admin/notifications') }}?page=' + target, { headers: { Accept: 'application/json' } }).then(function (response) { return response.json() }).then(function (result) {
       page = result.current_page || target; rows.innerHTML = ''
-      ;(result.data || []).forEach(function (item) { var tr = document.createElement('tr'), revoke = item.status === 'published'; tr.innerHTML = '<td>' + escapeHtml(item.title) + '</td><td>' + escapeHtml(item.audience) + '</td><td>' + escapeHtml(item.published_at || item.created_at) + '</td><td>' + escapeHtml(item.status) + '</td><td>' + (revoke ? '<button class="btn btn-sm btn-outline-danger" data-revoke="' + escapeHtml(item.id) + '">{{ trans('admin.notifications.sent.revoke') }}</button>' : '') + '</td>'; rows.appendChild(tr) })
+      ;(result.data || []).forEach(function (item) { var tr = document.createElement('tr'), active = item.status === 'published'; tr.innerHTML = '<td>' + escapeHtml(item.title) + '</td><td>' + escapeHtml(item.audience) + '</td><td>' + escapeHtml(item.published_at || item.created_at) + '</td><td>' + escapeHtml(item.status) + '</td><td>' + (active ? '<button class="btn btn-sm btn-outline-warning mr-1" data-end="' + escapeHtml(item.id) + '">{{ trans('admin.notifications.sent.end-publicity') }}</button><button class="btn btn-sm btn-outline-danger" data-revoke="' + escapeHtml(item.id) + '">{{ trans('admin.notifications.sent.revoke') }}</button>' : '<button class="btn btn-sm btn-outline-primary" data-reopen="' + escapeHtml(item.id) + '">{{ trans('admin.notifications.sent.reopen') }}</button>') + '</td>'; rows.appendChild(tr) })
       if (!rows.children.length) rows.innerHTML = '<tr><td colspan="5" class="text-center text-muted">{{ trans('admin.notifications.sent.empty') }}</td></tr>'
       pageLabel.textContent = page; root.querySelector('[data-sent-prev]').disabled = page <= 1; root.querySelector('[data-sent-next]').disabled = page >= (result.last_page || page)
     })
   }
-  rows.addEventListener('click', function (event) { var button = event.target.closest('[data-revoke]'); if (!button || !window.confirm('{{ trans('admin.notifications.sent.revoke-confirm') }}')) return; fetch('{{ url('/admin/notifications') }}/' + button.dataset.revoke + '/revoke', { method: 'POST', headers: { 'X-CSRF-TOKEN': csrf ? csrf.content : '', Accept: 'application/json' } }).then(function (response) { if (response.ok) load(page) }) })
+  rows.addEventListener('click', function (event) {
+    var button = event.target.closest('[data-revoke],[data-end],[data-reopen]'); if (!button) return
+    var action = button.dataset.revoke ? 'revoke' : (button.dataset.end ? 'end-publicity' : 'reopen'), id = button.dataset.revoke || button.dataset.end || button.dataset.reopen
+    var message = action === 'revoke' ? '{{ trans('admin.notifications.sent.revoke-confirm') }}' : (action === 'end-publicity' ? '{{ trans('admin.notifications.sent.end-confirm') }}' : '{{ trans('admin.notifications.sent.reopen-confirm') }}')
+    if (!window.confirm(message)) return
+    fetch('{{ url('/admin/notifications') }}/' + id + '/' + action, { method: 'POST', headers: { 'X-CSRF-TOKEN': csrf ? csrf.content : '', Accept: 'application/json' } }).then(function (response) { if (response.ok) load(page) })
+  })
   root.querySelector('[data-sent-prev]').addEventListener('click', function () { if (page > 1) load(page - 1) }); root.querySelector('[data-sent-next]').addEventListener('click', function () { load(page + 1) }); root.querySelector('[data-sent-refresh]').addEventListener('click', function () { load(page) }); load(page)
 })()
 </script>

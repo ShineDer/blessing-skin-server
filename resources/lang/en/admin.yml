@@ -27,6 +27,10 @@ notifications:
     status: Status
     revoke: Revoke
     revoke-confirm: Revoke this notification campaign? It will be removed from all users and cannot be restored.
+    end-publicity: End publicity
+    end-confirm: End publicity now? New users will no longer receive a popup and this becomes a regular notification.
+    reopen: Reopen publicity
+    reopen-confirm: Reopen publicity for this notification? A new publicity period will begin.
     empty: No sent notifications.
   sent:
     title: Sent notifications

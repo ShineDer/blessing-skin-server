@@ -27,6 +27,10 @@ notifications:
     status: 状态
     revoke: 撤回
     revoke-confirm: 确定要撤回这条通知吗？撤回后将从所有用户的通知列表中删除，且无法恢复。
+    end-publicity: 结束公示
+    end-confirm: 确定要立即结束公示吗？之后新用户不会再收到弹窗，这条通知会转为普通通知。
+    reopen: 重新公示
+    reopen-confirm: 确定要重新开启这条通知的公示吗？这会开始新的公示周期。
     empty: 暂无已发送通知
   sent:
     title: 已发送通知
