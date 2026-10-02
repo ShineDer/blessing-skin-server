@@ -54,6 +54,7 @@ class User extends Authenticatable
         'avatar' => 'integer',
         'permission' => 'integer',
         'verified' => 'bool',
+        'notification_retention_days' => 'integer',
         'is_dark_mode' => 'bool',
     ];
 

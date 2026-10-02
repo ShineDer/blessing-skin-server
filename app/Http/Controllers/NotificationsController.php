@@ -94,6 +94,12 @@ class NotificationsController extends Controller
     public function readAll(NotificationHistoryService $history) { $history->readAll(auth()->user()); return response()->noContent(); }
     public function delete($id, NotificationHistoryService $history) { $history->delete(auth()->user(), $id); return response()->noContent(); }
     public function bulkDelete(Request $request, NotificationHistoryService $history) { $data = $request->validate(['ids' => 'required|array', 'ids.*' => 'string']); $history->bulkDelete(auth()->user(), $data['ids']); return response()->noContent(); }
+    public function retention(Request $request, NotificationHistoryService $history)
+    {
+        $data = $request->validate(['days' => 'required|integer|in:0,30,90,180,365,730']);
+        $history->setRetention(auth()->user(), (int) $data['days']);
+        return ['days' => (int) $data['days']];
+    }
 
     public function read($id)
     {

@@ -52,6 +52,7 @@ Route::prefix('user')
         Route::get('', 'UserController@index')->name('home');
         Route::get('notifications', 'NotificationsController@history')->name('notifications.history');
         Route::post('notifications/read-all', 'NotificationsController@readAll')->name('notifications.read-all');
+        Route::post('notifications/retention', 'NotificationsController@retention')->name('notifications.retention');
         Route::post('notifications/bulk-delete', 'NotificationsController@bulkDelete')->name('notifications.bulk-delete');
         Route::post('notifications/{id}', 'NotificationsController@read')->name('notification.read');
         Route::post('notifications/{id}/read', 'NotificationsController@markRead')->name('notifications.read');

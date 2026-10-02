@@ -32,11 +32,45 @@ class NotificationHistoryService
 
     public function delete($user, string $id): void
     {
-        $user->notifications()->whereKey($id)->delete();
+        $notification = $user->notifications()->whereKey($id)->firstOrFail();
+        $notification->delete();
+        $this->syncDelivery($notification, true);
     }
 
     public function bulkDelete($user, array $ids): int
     {
-        return $user->notifications()->whereIn('id', $ids)->delete();
+        $notifications = $user->notifications()->whereIn('id', $ids)->get();
+        foreach ($notifications as $notification) { $notification->delete(); $this->syncDelivery($notification, true); }
+        return $notifications->count();
+    }
+
+    public function setRetention($user, int $days): void
+    {
+        $allowed = [0, 30, 90, 180, 365, 730];
+        abort_unless(in_array($days, $allowed, true), 422, 'Invalid retention period.');
+        $old = (int) ($user->notification_retention_days ?? 0);
+        $user->forceFill(['notification_retention_days' => $days])->save();
+        if ($days > 0 && ($old === 0 || $days < $old)) {
+            $cutoff = now()->subDays($days);
+            $notifications = $user->readNotifications()->where('read_at', '<=', $cutoff)->get();
+            foreach ($notifications as $notification) { $notification->delete(); $this->syncDelivery($notification, true); }
+        }
+    }
+
+    public function cleanup($user): int
+    {
+        $days = (int) ($user->notification_retention_days ?? 0);
+        if (!$days) return 0;
+        $notifications = $user->readNotifications()->where('read_at', '<=', now()->subDays($days))->get();
+        foreach ($notifications as $notification) { $notification->delete(); $this->syncDelivery($notification, true); }
+        return $notifications->count();
+    }
+
+    private function syncDelivery($notification, bool $deleted): void
+    {
+        $data = $notification->data ?? [];
+        if (!empty($data['delivery_id'])) {
+            \App\Models\NotificationDelivery::whereKey($data['delivery_id'])->update(['visible' => !$deleted, 'deleted_at' => $deleted ? now() : null]);
+        }
     }
 }
