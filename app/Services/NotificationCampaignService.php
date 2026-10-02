@@ -55,7 +55,16 @@ class NotificationCampaignService
     public function revoke(NotificationCampaign $campaign): void
     {
         abort_unless($campaign->published_at && $campaign->published_at->gte(now()->subDay()), 422, 'Campaign can only be revoked within 24 hours.');
-        DB::transaction(function () use ($campaign) { $campaign->update(['status' => 'revoked', 'revoked_at' => now()]); $campaign->runs()->each(fn ($run) => $run->deliveries()->update(['visible' => false])); });
+        DB::transaction(function () use ($campaign) {
+            $campaign->update(['status' => 'revoked', 'revoked_at' => now()]);
+            $campaign->runs()->with('deliveries')->each(function ($run) {
+                $notificationIds = $run->deliveries->pluck('notification_id')->filter();
+                if ($notificationIds->isNotEmpty()) {
+                    DB::table('notifications')->whereIn('id', $notificationIds)->delete();
+                }
+                $run->deliveries()->update(['visible' => false, 'deleted_at' => now()]);
+            });
+        });
     }
 
     public function reopen(NotificationCampaign $campaign, array $userIds = []): NotificationCampaignRun

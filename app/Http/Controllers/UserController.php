@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use League\CommonMark\GithubFlavoredMarkdownConverter;
+use App\Services\NotificationEligibilityService;
 
 class UserController extends Controller
 {
@@ -28,9 +29,10 @@ class UserController extends Controller
             ->makeHidden(['password', 'ip', 'remember_token', 'verification_token']);
     }
 
-    public function index(Filter $filter)
+    public function index(Filter $filter, NotificationEligibilityService $eligibility)
     {
         $user = Auth::user();
+        $eligibility->deliverFor($user);
 
         [$min, $max] = explode(',', option('sign_score'));
         $scoreIntro = trans('user.score-intro.introduction', [
