@@ -50,7 +50,8 @@ Route::prefix('user')
     ->middleware(['authorize'])
     ->group(function () {
         Route::get('', 'UserController@index')->name('home');
-        Route::get('notifications', 'NotificationsController@history')->name('notifications.history');
+        Route::get('notifications', 'NotificationsController@page')->name('notifications.page');
+        Route::get('notifications/data', 'NotificationsController@history')->name('notifications.history');
         Route::post('notifications/read-all', 'NotificationsController@readAll')->name('notifications.read-all');
         Route::post('notifications/retention', 'NotificationsController@retention')->name('notifications.retention');
         Route::post('notifications/bulk-delete', 'NotificationsController@bulkDelete')->name('notifications.bulk-delete');

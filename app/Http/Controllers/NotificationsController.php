@@ -92,6 +92,11 @@ class NotificationsController extends Controller
         ]);
     }
 
+    public function page()
+    {
+        return view('user.notifications');
+    }
+
     public function history(Request $request, NotificationHistoryService $history)
     {
         return response()->json($history->paginate(auth()->user(), (int) $request->query('page', 1)));

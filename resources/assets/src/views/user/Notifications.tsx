@@ -33,7 +33,7 @@ const Notifications: React.FC = () => {
 
   const load = async (current = 1) => {
     setLoading(true)
-    const result = await fetch.get<Page>('/user/notifications', { page: current })
+    const result = await fetch.get<Page>('/user/notifications/data', { page: current })
     setPage(result?.data ? result : { data: [], current_page: current, last_page: current })
     setLoading(false)
   }
