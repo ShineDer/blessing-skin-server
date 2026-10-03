@@ -141,6 +141,17 @@ user:
     message: Du musst deine E-Mail-Adresse verifizieren, bevor du den Skin Hosting-Dienst nutzen kannst. Du hast die E-Mail noch nicht erhalten?
     resend: Klicke hier, um die Bestätigungsmail erneut zu senden.
     sending: Wird gesendet...
+  notifications:
+    title: Notifications
+    mark-all-read: Mark all as read
+    mark-unread: Mark unread
+    mark-all-read-warning: Mark all notifications as read? You may overlook an important notification.
+    delete-warning: Delete this notification? This cannot be undone.
+    retention: Auto-delete read notifications:
+    retention-forever: Keep forever
+    days: days
+    retention-saved: Notification retention saved
+    retention-warning: Shortening retention may permanently delete read notifications; unread notifications will not be deleted. Continue?
   oauth:
     id: Client-ID
     name: App-Name

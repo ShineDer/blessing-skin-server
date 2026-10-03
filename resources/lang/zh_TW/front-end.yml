@@ -141,6 +141,17 @@ user:
     message: 您必須驗證您的電子郵件地址后才能使用皮膚材質儲存服務。還沒有收到電子郵件？
     resend: 點擊此處以重新發送。
     sending: 發送中...
+  notifications:
+    title: 站內通知
+    mark-all-read: 全部標記為已讀
+    mark-unread: 標記為未讀
+    mark-all-read-warning: 確定要將全部通知標記為已讀嗎？此操作可能導致你忽視部分重要通知。
+    delete-warning: 確定要刪除這條通知嗎？刪除後不可恢復。
+    retention: 自動刪除已讀通知：
+    retention-forever: 永久保留
+    days: 天
+    retention-saved: 通知保留設置已保存
+    retention-warning: 縮短保留期限可能永久刪除已讀通知，未讀通知不會被刪除。確定繼續嗎？
   oauth:
     id: 客戶端 ID
     name: 應用程式名稱

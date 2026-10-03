@@ -141,6 +141,17 @@ user:
     message: Debe verificar su dirección de correo electrónico antes de usar el servicio de alojamiento de skins. ¿No ha recibido el correo electrónico?
     resend: Haga clic aquí para enviar de nuevo.
     sending: Enviando...
+  notifications:
+    title: Notifications
+    mark-all-read: Mark all as read
+    mark-unread: Mark unread
+    mark-all-read-warning: Mark all notifications as read? You may overlook an important notification.
+    delete-warning: Delete this notification? This cannot be undone.
+    retention: Auto-delete read notifications:
+    retention-forever: Keep forever
+    days: days
+    retention-saved: Notification retention saved
+    retention-warning: Shortening retention may permanently delete read notifications; unread notifications will not be deleted. Continue?
   oauth:
     id: ID de cliente
     name: Nombre de app
