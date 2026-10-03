@@ -24,7 +24,6 @@ class NotificationHistoryService
                     'popup_enabled' => (bool) ($data['popup_enabled'] ?? false),
                 ];
             }));
-        $paginator->unread_count = $user->unreadNotifications()->count();
         return $paginator;
     }
 

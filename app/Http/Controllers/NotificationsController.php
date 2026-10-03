@@ -80,7 +80,12 @@ class NotificationsController extends Controller
 
     public function history(Request $request, NotificationHistoryService $history)
     {
-        return response()->json($history->paginate(auth()->user(), (int) $request->query('page', 1)));
+        $user = auth()->user();
+        $page = $history->paginate($user, (int) $request->query('page', 1));
+
+        return response()->json(array_merge($page->toArray(), [
+            'unread_count' => $user->unreadNotifications()->count(),
+        ]));
     }
 
     public function markRead($id, NotificationHistoryService $history)
@@ -109,7 +114,7 @@ class NotificationsController extends Controller
         return [
             'title' => $notification->data['title'] ?? '',
             'content' => app(NotificationMarkdownService::class)->render($notification->data['content'] ?? ''),
-            'time' => $notification->created_at->toDateTimeString(),
+            'time' => $notification->created_at->toIso8601String(),
         ];
     }
 }

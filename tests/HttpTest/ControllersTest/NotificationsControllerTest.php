@@ -103,7 +103,22 @@ class NotificationsControllerTest extends TestCase
             ->assertJsonPath('data.0.title', 'A title')
             ->assertJsonPath('data.0.content', '**A message**')
             ->assertJsonPath('data.0.content_html', '<p><strong>A message</strong></p>'."\n")
-            ->assertJsonPath('unread_count', 1);
+            ->assertJsonPath('unread_count', 1)
+            ->assertJsonPath('data.0.id', $user->notifications()->first()->id);
+    }
+
+    public function testReadReturnsSanitizedNotificationContent()
+    {
+        $user = User::factory()->create();
+        $user->notify(new Notifications\SiteMessage('Sanitized title', '**Safe** <script>alert(1)</script>'));
+        $id = $user->notifications()->first()->id;
+
+        $this->actingAs($user)
+            ->postJson('/user/notifications/'.$id.'/read')
+            ->assertOk()
+            ->assertJsonPath('title', 'Sanitized title')
+            ->assertJsonPath('content', app(\App\Services\NotificationMarkdownService::class)->render('**Safe** <script>alert(1)</script>'))
+            ->assertJsonMissingPath('content_html');
     }
 
     public function testNotificationCenterRouteReturnsHtml()

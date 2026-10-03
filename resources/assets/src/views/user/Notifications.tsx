@@ -58,12 +58,13 @@ const Notifications: React.FC = () => {
   useEffect(() => { void load() }, [])
 
   const read = async (notification: Notification) => {
+    const wasUnread = !notification.read_at && !notification.read
     const detail = await fetch.post<{
       title: string
       content: string
       time: string
     }>(`/user/notifications/${notification.id}/read`)
-    if (!notification.read_at && !notification.read) {
+    if (wasUnread) {
       setPage((old) => ({ ...old, data: old.data.map((item) => item.id === notification.id ? { ...item, read: true, read_at: new Date().toISOString() } : item) }))
       const count = Math.max(0, unreadCount - 1)
       setUnreadCount(count)
