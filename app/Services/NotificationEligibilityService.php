@@ -32,6 +32,9 @@ class NotificationEligibilityService
                     ->where('data', 'like', '%delivery_id%'.$delivery->id.'%')
                     ->latest('created_at')
                     ->value('id');
+                if (!$notificationId) {
+                    throw new \RuntimeException('Notification record was not created for delivery '.$delivery->id);
+                }
                 $delivery->update(['delivered' => true, 'notification_id' => $notificationId]);
                 $count++;
             }

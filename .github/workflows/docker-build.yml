@@ -7,7 +7,21 @@ on:
     branches: [dev]
     paths:
       - 'Dockerfile'
+      - '.dockerignore'
       - '.github/workflows/docker-build.yml'
+      - 'app/**'
+      - 'bootstrap/**'
+      - 'config/**'
+      - 'database/**'
+      - 'public/**'
+      - 'resources/**'
+      - 'routes/**'
+      - 'composer.json'
+      - 'composer.lock'
+      - 'package.json'
+      - 'yarn.lock'
+      - 'webpack.config.ts'
+      - 'tsconfig*.json'
 
 env:
   REGISTRY: ghcr.io

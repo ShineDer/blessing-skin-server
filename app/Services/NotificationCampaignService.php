@@ -42,6 +42,9 @@ class NotificationCampaignService
                     ->where('data', 'like', '%delivery_id%'.$delivery->id.'%')
                     ->latest('created_at')
                     ->value('id');
+                if (!$notificationId) {
+                    throw new \RuntimeException('Notification record was not created for delivery '.$delivery->id);
+                }
                 $delivery->update(['delivered' => true, 'notification_id' => $notificationId]);
             } catch (\Throwable $e) { $delivery->update(['failure_reason' => Str::limit($e->getMessage(), 1000)]); $failed[] = $user->uid; }
         }
@@ -94,6 +97,40 @@ class NotificationCampaignService
             'published_at' => now(),
             'expires_at' => $campaign->popup_enabled ? now()->addDays(1) : null,
         ]);
+
+        $targets = $userIds ? User::whereIn('uid', $userIds)->get() : $this->audience([
+            'receiver' => $campaign->audience,
+            'uid' => null,
+            'email' => null,
+        ]);
+        foreach ($targets as $user) {
+            $delivery = NotificationDelivery::firstOrCreate([
+                'campaign_run_id' => $run->id,
+                'user_id' => $user->uid,
+            ], ['eligible' => true]);
+            if ($delivery->delivered) continue;
+            try {
+                $notification = new SiteMessage($campaign->title, $campaign->content, [
+                    'campaign_id' => $campaign->id,
+                    'campaign_run_id' => $run->id,
+                    'delivery_id' => $delivery->id,
+                    'popup_enabled' => $campaign->popup_enabled,
+                    'content_html' => $campaign->content_html,
+                ]);
+                Notification::send($user, $notification);
+                $notificationId = DB::table('notifications')
+                    ->where('notifiable_id', $user->uid)
+                    ->where('type', SiteMessage::class)
+                    ->where('data', 'like', '%delivery_id%'.$delivery->id.'%')
+                    ->latest('created_at')
+                    ->value('id');
+                if (!$notificationId) throw new \RuntimeException('Notification record was not created.');
+                $delivery->update(['delivered' => true, 'notification_id' => $notificationId]);
+            } catch (\Throwable $e) {
+                $delivery->update(['failure_reason' => Str::limit($e->getMessage(), 1000)]);
+            }
+        }
+        $run->update(['completed_at' => now(), 'status' => 'completed']);
         return $run;
     }
 
