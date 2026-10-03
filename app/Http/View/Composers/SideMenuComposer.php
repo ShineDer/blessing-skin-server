@@ -43,6 +43,16 @@ class SideMenuComposer
         $menu = $menu[$type];
         $menu = $this->filter->apply('side_menu', $menu, [$type]);
 
+        if ($type === 'user' && auth()->check()) {
+            $unread = auth()->user()->unreadNotifications()->count();
+            foreach ($menu as &$item) {
+                if (($item['link'] ?? null) === 'user/notifications') {
+                    $item['unread_count'] = $unread;
+                }
+            }
+            unset($item);
+        }
+
         $view->with('items', array_map(fn ($item) => $this->transform($item), $menu));
     }
 

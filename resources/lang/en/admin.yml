@@ -32,6 +32,12 @@ notifications:
     reopen: Reopen publicity
     reopen-confirm: Reopen publicity for this notification? A new publicity period will begin.
     empty: No sent notifications.
+    refresh: Refresh
+    loading: Loading…
+    prev: Previous
+    next: Next
+    publicity: Public announcement
+    public-days-zero: When set to 0, this is a regular popup notification.
   popup-enabled: Show as a popup
   public-days: Public period (days)
   public-days-help: When enabled, eligible users see this notification popup once during this period.

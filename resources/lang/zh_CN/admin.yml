@@ -32,6 +32,12 @@ notifications:
     reopen: 重新公示
     reopen-confirm: 确定要重新开启这条通知的公示吗？这会开始新的公示周期。
     empty: 暂无已发送通知
+    refresh: 刷新
+    loading: 正在加载…
+    prev: 上一页
+    next: 下一页
+    publicity: 公示通知
+    public-days-zero: 数值为 0 时该通知按普通弹窗通知处理。
   popup-enabled: 以弹窗显示
   public-days: 公示期（天）
   public-days-help: 启用后，符合条件的用户将在公示期内看到一次通知弹窗。

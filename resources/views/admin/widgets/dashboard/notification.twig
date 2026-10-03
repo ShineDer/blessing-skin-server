@@ -61,21 +61,35 @@
           <label class="custom-control-label" for="notification-popup">{{ trans('admin.notifications.popup-enabled') }}</label>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" id="notification-publicity-option" hidden>
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="notification-publicity" name="publicity_enabled" value="1" disabled>
+          <label class="custom-control-label" for="notification-publicity">{{ trans('admin.notifications.sent.publicity') }}</label>
+        </div>
+      </div>
+      <div class="form-group" id="notification-public-days-field" hidden>
         <label for="notification-public-days">{{ trans('admin.notifications.public-days') }}</label>
         <input type="number" id="notification-public-days" name="public_days" class="form-control" min="0" max="365" value="0" disabled>
-        <small class="form-text text-muted">{{ trans('admin.notifications.public-days-help') }}</small>
+        <small class="form-text text-muted">{{ trans('admin.notifications.sent.public-days-zero') }}</small>
       </div>
       <script>
         (function () {
           var popup = document.getElementById('notification-popup')
+          var publicity = document.getElementById('notification-publicity')
+          var option = document.getElementById('notification-publicity-option')
           var days = document.getElementById('notification-public-days')
-          if (popup && days) {
-            popup.addEventListener('change', function () {
-              days.disabled = !popup.checked
-              if (days.disabled) days.value = '0'
-            })
+          var daysField = document.getElementById('notification-public-days-field')
+          function update() {
+            option.hidden = !popup.checked
+            publicity.disabled = !popup.checked
+            if (!popup.checked) publicity.checked = false
+            daysField.hidden = !popup.checked || !publicity.checked
+            days.disabled = daysField.hidden
+            if (days.disabled) days.value = '0'
           }
+          popup.addEventListener('change', update)
+          publicity.addEventListener('change', update)
+          update()
         })()
       </script>
     </div>
@@ -92,10 +106,10 @@
 <div class="card mt-3" data-sent-notifications>
   <div class="card-header d-flex justify-content-between align-items-center">
     <h3 class="card-title">{{ trans('admin.notifications.sent.title') }}</h3>
-    <button type="button" class="btn btn-sm btn-outline-secondary" data-sent-refresh>{{ trans('general.refresh') }}</button>
+    <button type="button" class="btn btn-sm btn-outline-secondary" data-sent-refresh>{{ trans('admin.notifications.sent.refresh') }}</button>
   </div>
-  <div class="card-body p-0"><div class="table-responsive"><table class="table table-hover mb-0"><thead><tr><th>{{ trans('admin.notifications.title') }}</th><th>{{ trans('admin.notifications.sent.audience') }}</th><th>{{ trans('admin.notifications.sent.time') }}</th><th>{{ trans('admin.notifications.sent.status') }}</th><th></th></tr></thead><tbody data-sent-rows><tr><td colspan="5" class="text-center text-muted">{{ trans('general.loading') }}</td></tr></tbody></table></div></div>
-  <div class="card-footer d-flex justify-content-between"><button type="button" class="btn btn-sm btn-link" data-sent-prev disabled>{{ trans('vendor.datatable.prev') }}</button><span data-sent-page>1</span><button type="button" class="btn btn-sm btn-link" data-sent-next disabled>{{ trans('vendor.datatable.next') }}</button></div>
+  <div class="card-body p-0"><div class="table-responsive"><table class="table table-hover mb-0"><thead><tr><th>{{ trans('admin.notifications.title') }}</th><th>{{ trans('admin.notifications.sent.audience') }}</th><th>{{ trans('admin.notifications.sent.time') }}</th><th>{{ trans('admin.notifications.sent.status') }}</th><th></th></tr></thead><tbody data-sent-rows><tr><td colspan="5" class="text-center text-muted">{{ trans('admin.notifications.sent.loading') }}</td></tr></tbody></table></div></div>
+  <div class="card-footer d-flex justify-content-between"><button type="button" class="btn btn-sm btn-link" data-sent-prev disabled>{{ trans('admin.notifications.sent.prev') }}</button><span data-sent-page>1</span><button type="button" class="btn btn-sm btn-link" data-sent-next disabled>{{ trans('admin.notifications.sent.next') }}</button></div>
 </div>
 <script>
 (function () {
@@ -106,7 +120,16 @@
   function load(target) {
     fetch('{{ url('/admin/notifications') }}?page=' + target, { headers: { Accept: 'application/json' } }).then(function (response) { return response.json() }).then(function (result) {
       page = result.current_page || target; rows.innerHTML = ''
-      ;(result.data || []).forEach(function (item) { var tr = document.createElement('tr'), active = item.status === 'published', revoked = item.status === 'revoked'; tr.innerHTML = '<td>' + escapeHtml(item.title) + '</td><td>' + escapeHtml(item.audience) + '</td><td>' + escapeHtml(item.published_at || item.created_at) + '</td><td>' + escapeHtml(item.status) + '</td><td>' + (active ? '<button class="btn btn-sm btn-outline-warning mr-1" data-end="' + escapeHtml(item.id) + '">{{ trans('admin.notifications.sent.end-publicity') }}</button><button class="btn btn-sm btn-outline-danger" data-revoke="' + escapeHtml(item.id) + '">{{ trans('admin.notifications.sent.revoke') }}</button>' : (!revoked ? '<button class="btn btn-sm btn-outline-primary" data-reopen="' + escapeHtml(item.id) + '">{{ trans('admin.notifications.sent.reopen') }}</button>' : '')) + '</td>'; rows.appendChild(tr) })
+      ;(result.data || []).forEach(function (item) {
+        var tr = document.createElement('tr'), revoked = item.status === 'revoked', publicized = item.is_publicity_active === true
+        var sentAt = new Date(item.published_at || item.created_at).getTime(), mayRevoke = !revoked && Date.now() - sentAt < 24 * 60 * 60 * 1000
+        var actions = ''
+        if (publicized) actions += '<button class="btn btn-sm btn-outline-warning mr-1" data-end="' + escapeHtml(item.id) + '">{{ trans('admin.notifications.sent.end-publicity') }}</button>'
+        if (mayRevoke) actions += '<button class="btn btn-sm btn-outline-danger" data-revoke="' + escapeHtml(item.id) + '">{{ trans('admin.notifications.sent.revoke') }}</button>'
+        if (item.status === 'expired' && item.expires_at) actions += '<button class="btn btn-sm btn-outline-primary" data-reopen="' + escapeHtml(item.id) + '">{{ trans('admin.notifications.sent.reopen') }}</button>'
+        tr.innerHTML = '<td>' + escapeHtml(item.title) + '</td><td>' + escapeHtml(item.audience) + '</td><td>' + escapeHtml(item.published_at || item.created_at) + '</td><td>' + escapeHtml(item.status) + '</td><td>' + actions + '</td>'
+        rows.appendChild(tr)
+      })
       if (!rows.children.length) rows.innerHTML = '<tr><td colspan="5" class="text-center text-muted">{{ trans('admin.notifications.sent.empty') }}</td></tr>'
       pageLabel.textContent = page; root.querySelector('[data-sent-prev]').disabled = page <= 1; root.querySelector('[data-sent-next]').disabled = page >= (result.last_page || page)
     })

@@ -13,7 +13,7 @@ class NotificationEligibilityService
     public function deliverFor($user): int
     {
         $count = 0;
-        $campaigns = NotificationCampaign::where('status', 'published')->where('popup_enabled', true)->where(function ($q) { $q->whereNull('expires_at')->orWhere('expires_at', '>', now()); })->get();
+        $campaigns = NotificationCampaign::where('status', 'published')->where('popup_enabled', true)->where('publicity_enabled', true)->where('public_days', '>', 0)->where(function ($q) { $q->whereNull('expires_at')->orWhere('expires_at', '>', now()); })->get();
         foreach ($campaigns as $campaign) {
             $run = $campaign->runs()->latest('id')->first();
             if (!$run || !$this->eligible($campaign, $run, $user)) continue;
@@ -56,7 +56,7 @@ class NotificationEligibilityService
             );
         }
 
-        if ($campaign->expires_at === null && $run->mode !== 'reopen') {
+        if (!$campaign->publicity_enabled || $campaign->public_days < 1) {
             return false;
         }
 

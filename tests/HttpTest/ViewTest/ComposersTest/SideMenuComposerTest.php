@@ -4,6 +4,7 @@ namespace Tests;
 
 use App\Events;
 use App\Models\User;
+use App\Notifications\SiteMessage;
 use App\Services\Plugin;
 use App\Services\PluginManager;
 use Illuminate\Support\Facades\Event;
@@ -53,6 +54,23 @@ class SideMenuComposerTest extends TestCase
         $this->assertCount(1, $crawler->filter('aside .nav-treeview'));
         $this->assertCount(2, $crawler->filter('aside .nav-item.active'));
         $this->assertCount(2, $crawler->filter('aside .nav-link.active'));
+    }
+
+    public function testNotificationBadgeReflectsUnreadCount()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user)->get('/user')
+            ->assertSee('data-notification-unread-count', false)
+            ->assertSee('badge-warning d-none', false);
+
+        $user->notify(new SiteMessage('test', 'content'));
+        $this->get('/user')
+            ->assertSee('data-notification-unread-count', false)
+            ->assertSee('>1</span>', false);
+
+        $user->unreadNotifications()->first()->markAsRead();
+        $this->get('/user')
+            ->assertSee('badge-warning d-none', false);
     }
 
     public function testCollectPluginConfigs()

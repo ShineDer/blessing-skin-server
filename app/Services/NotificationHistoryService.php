@@ -9,7 +9,23 @@ class NotificationHistoryService
 {
     public function paginate($user, int $page = 1): LengthAwarePaginator
     {
-        return $user->notifications()->latest()->paginate(20, ['*'], 'page', $page);
+        $paginator = $user->notifications()->latest()->paginate(20, ['*'], 'page', $page);
+        $paginator->setCollection($paginator->getCollection()
+            ->map(function (DatabaseNotification $notification) {
+                $data = $notification->data;
+
+                return [
+                    'id' => $notification->id,
+                    'title' => $data['title'] ?? '',
+                    'content' => $data['content'] ?? '',
+                    'content_html' => app(NotificationMarkdownService::class)->render($data['content'] ?? ''),
+                    'time' => $notification->created_at->toIso8601String(),
+                    'read_at' => $notification->read_at?->toIso8601String(),
+                    'popup_enabled' => (bool) ($data['popup_enabled'] ?? false),
+                ];
+            }));
+        $paginator->unread_count = $user->unreadNotifications()->count();
+        return $paginator;
     }
 
     public function read($user, string $id): DatabaseNotification

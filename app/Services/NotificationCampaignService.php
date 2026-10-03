@@ -26,7 +26,14 @@ class NotificationCampaignService
                 ? $users->pluck('email')->values()->all()
                 : $users->pluck('uid')->values()->all(),
             'popup_enabled' => (bool) ($data['popup_enabled'] ?? false),
-            'published_at' => now(), 'expires_at' => !empty($data['public_days']) ? now()->addDays((int) $data['public_days']) : null,
+            'publicity_enabled' => !empty($data['popup_enabled']) && !empty($data['publicity_enabled']),
+            'public_days' => !empty($data['popup_enabled']) && !empty($data['publicity_enabled'])
+                ? (int) ($data['public_days'] ?? 0)
+                : 0,
+            'published_at' => now(),
+            'expires_at' => !empty($data['popup_enabled']) && !empty($data['publicity_enabled']) && (int) ($data['public_days'] ?? 0) > 0
+                ? now()->addDays((int) $data['public_days'])
+                : null,
             'status' => 'published',
         ]);
         $run = $campaign->runs()->create(['run_number' => 1, 'mode' => 'initial', 'audience_snapshot' => $campaign->audience_snapshot, 'created_by' => $sender?->uid, 'started_at' => now(), 'status' => 'running']);
@@ -82,6 +89,7 @@ class NotificationCampaignService
     public function reopen(NotificationCampaign $campaign, array $userIds = []): NotificationCampaignRun
     {
         abort_if($campaign->status === 'revoked', 422, 'Revoked campaigns cannot be reopened.');
+        abort_unless($campaign->popup_enabled && $campaign->publicity_enabled && $campaign->public_days > 0, 422, 'Only publicity campaigns can be reopened.');
 
         $run = $campaign->runs()->create([
             'run_number' => $campaign->runs()->max('run_number') + 1,
@@ -95,7 +103,9 @@ class NotificationCampaignService
             'status' => 'published',
             'revoked_at' => null,
             'published_at' => now(),
-            'expires_at' => $campaign->popup_enabled ? now()->addDays(1) : null,
+            'expires_at' => $campaign->publicity_enabled && $campaign->public_days > 0
+                ? now()->addDays($campaign->public_days)
+                : null,
         ]);
 
         $targets = $userIds ? User::whereIn('uid', $userIds)->get() : $this->audience([
@@ -136,19 +146,20 @@ class NotificationCampaignService
 
     public function updatePublicity(NotificationCampaign $campaign, int $days): void
     {
-        abort_unless($days >= 0 && $days <= 365, 422, 'Invalid publicity period.');
-        abort_if($campaign->status === 'revoked' || !$campaign->popup_enabled, 422, 'Campaign is not publicized.');
+        abort_unless($days >= 1 && $days <= 365, 422, 'A publicity period must be between 1 and 365 days.');
+        abort_if($campaign->status === 'revoked' || !$campaign->popup_enabled || !$campaign->publicity_enabled, 422, 'Campaign is not publicized.');
 
-        $expires = $days === 0 ? null : $campaign->published_at->copy()->addDays($days);
-        if ($expires !== null && $expires->lte(now())) {
+        $expires = $campaign->published_at->copy()->addDays($days);
+        if ($expires->lte(now())) {
             $expires = now()->addDay();
+            $days = max(1, (int) ceil($campaign->published_at->diffInSeconds($expires) / 86400));
         }
-        $campaign->update(['expires_at' => $expires, 'status' => $expires ? 'published' : 'expired', 'popup_enabled' => (bool) $expires]);
+        $campaign->update(['public_days' => $days, 'expires_at' => $expires, 'status' => 'published']);
     }
 
     public function endPublicity(NotificationCampaign $campaign): void
     {
-        abort_if($campaign->status !== 'published' || !$campaign->popup_enabled, 422, 'Campaign is not publicized.');
-        $campaign->update(['status' => 'expired', 'popup_enabled' => false, 'expires_at' => now()]);
+        abort_if(!$campaign->is_publicity_active, 422, 'Campaign is not publicized.');
+        $campaign->update(['status' => 'expired', 'expires_at' => now()]);
     }
 }

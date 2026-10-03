@@ -11,7 +11,7 @@ class ExpireNotificationCampaignsCommand extends Command
     protected $description = 'Expire notification campaign public periods';
     public function handle(): int
     {
-        NotificationCampaign::where('status', 'published')->whereNotNull('expires_at')->where('expires_at', '<=', now())->update(['status' => 'expired', 'popup_enabled' => false]);
+        NotificationCampaign::where('status', 'published')->where('publicity_enabled', true)->whereNotNull('expires_at')->where('expires_at', '<=', now())->update(['status' => 'expired']);
         return self::SUCCESS;
     }
 }

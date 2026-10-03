@@ -92,6 +92,29 @@ class NotificationsControllerTest extends TestCase
         Notification::assertNotSentTo($admin, Notifications\SiteMessage::class);
     }
 
+    public function testHistoryContainsNotificationContent()
+    {
+        $user = User::factory()->create();
+        $user->notify(new Notifications\SiteMessage('A title', '**A message**'));
+
+        $this->actingAs($user)
+            ->getJson('/user/notifications/data')
+            ->assertOk()
+            ->assertJsonPath('data.0.title', 'A title')
+            ->assertJsonPath('data.0.content', '**A message**')
+            ->assertJsonPath('data.0.content_html', '<p><strong>A message</strong></p>'."\n")
+            ->assertJsonPath('unread_count', 1);
+    }
+
+    public function testNotificationCenterRouteReturnsHtml()
+    {
+        $this->actingAs(User::factory()->create())
+            ->get('/user/notifications')
+            ->assertOk()
+            ->assertHeader('content-type', 'text/html; charset=UTF-8')
+            ->assertSee('id="user-notifications"', false);
+    }
+
     public function testAll()
     {
         $user = User::factory()->create();

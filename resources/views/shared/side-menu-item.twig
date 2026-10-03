@@ -20,7 +20,12 @@
       {% endif %}
     >
       <i class="nav-icon {{ item.icon == 'fa-circle' ? 'far' : 'fas' }} {{ item.icon }}"></i>
-      <p class="ml-1">{{ trans(item.title) }}</p>
+      <p class="ml-1 position-relative">
+        {{ trans(item.title) }}
+        {% if item.unread_count is defined %}
+          <span class="badge badge-warning ml-1 {{ item.unread_count > 0 ? '' : 'd-none' }}" data-notification-unread-count>{{ item.unread_count > 99 ? '99+' : item.unread_count }}</span>
+        {% endif %}
+      </p>
     </a>
   {% endif %}
 </li>

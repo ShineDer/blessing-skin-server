@@ -16,6 +16,8 @@ return new class extends Migration {
             $table->string('audience', 32);
             $table->json('audience_snapshot')->nullable();
             $table->boolean('popup_enabled')->default(false);
+            $table->boolean('publicity_enabled')->default(false);
+            $table->unsignedInteger('public_days')->default(0);
             $table->timestamp('published_at')->nullable();
             $table->timestamp('expires_at')->nullable();
             $table->unsignedInteger('retention_days')->nullable();

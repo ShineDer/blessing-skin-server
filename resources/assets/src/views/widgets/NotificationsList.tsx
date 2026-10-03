@@ -2,6 +2,15 @@ import React, { useState, useEffect } from 'react'
 import * as fetch from '@/scripts/net'
 import { showModal } from '@/scripts/notify'
 
+function updateUnreadBadges(count: number) {
+  const formatted = count > 99 ? '99+' : String(count)
+  document.querySelectorAll<HTMLElement>('[data-notification-unread-count]').forEach((badge) => {
+    badge.textContent = formatted
+    badge.classList.toggle('d-none', count <= 0)
+  })
+  document.dispatchEvent(new CustomEvent('notificationUnreadCountChanged', { detail: count }))
+}
+
 export type Notification = {
   id: string
   title: string
@@ -14,6 +23,15 @@ export type Notification = {
 const NotificationsList: React.FC = () => {
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [noUnreadText, setNoUnreadText] = useState('')
+  const [externalUnreadCount, setExternalUnreadCount] = useState<number | null>(null)
+
+  useEffect(() => {
+    const onUnreadCountChanged = (event: Event) => {
+      setExternalUnreadCount((event as CustomEvent<number>).detail)
+    }
+    document.addEventListener('notificationUnreadCountChanged', onUnreadCountChanged)
+    return () => document.removeEventListener('notificationUnreadCountChanged', onUnreadCountChanged)
+  }, [])
 
   useEffect(() => {
     const dataset = document.querySelector<HTMLLIElement>(
@@ -52,9 +70,12 @@ const NotificationsList: React.FC = () => {
           : notification,
       ),
     )
+    const nextCount = Math.max(0, unreadCount - 1)
+    setExternalUnreadCount(nextCount)
+    updateUnreadBadges(nextCount)
   }
 
-  const unreadCount = notifications.filter((notification) => !notification.read && !notification.read_at).length
+  const unreadCount = externalUnreadCount ?? notifications.filter((notification) => !notification.read && !notification.read_at).length
   const hasUnread = unreadCount > 0
 
   return (

@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\NotificationCampaign;
-use App\Notifications;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Notification;
-use App\Services\NotificationHistoryService;
 use App\Services\NotificationCampaignService;
+use App\Services\NotificationHistoryService;
 use App\Services\NotificationMarkdownService;
-use League\CommonMark\GithubFlavoredMarkdownConverter;
+use Illuminate\Http\Request;
 
 class NotificationsController extends Controller
 {
@@ -19,43 +15,28 @@ class NotificationsController extends Controller
         $data = $request->validate([
             'receiver' => 'required|in:all,normal,verified,uid,email',
             'popup_enabled' => 'boolean',
-            'public_days' => 'integer|min:0|max:365',
+            'publicity_enabled' => 'boolean',
+            'public_days' => 'required_if:publicity_enabled,1|integer|min:0|max:365',
             'uid' => 'required_if:receiver,uid|nullable|integer|exists:users',
             'email' => 'required_if:receiver,email|nullable|email|exists:users',
             'title' => 'required|max:20',
             'content' => 'string|nullable',
         ]);
 
+        $data['public_days'] = !empty($data['popup_enabled']) && !empty($data['publicity_enabled'])
+            ? (int) ($data['public_days'] ?? 0)
+            : 0;
         $campaignResult = app(NotificationCampaignService::class)->send($data, auth()->user());
         session(['sentResult' => trans('admin.notifications.send.success')]);
-        return redirect('/admin');
-
-        $notification = new Notifications\SiteMessage($data['title'], $data['content']);
-
-        switch ($data['receiver']) {
-            case 'all':
-                $users = User::all();
-                break;
-            case 'normal':
-                $users = User::where('permission', User::NORMAL)->get();
-                break;
-            case 'uid':
-                $users = User::where('uid', $data['uid'])->get();
-                break;
-            case 'email':
-                $users = User::where('email', $data['email'])->get();
-                break;
-        }
-        Notification::send($users, $notification);
-
-        session(['sentResult' => trans('admin.notifications.send.success')]);
-
         return redirect('/admin');
     }
 
     public function campaigns()
     {
-        return NotificationCampaign::withCount(['runs'])->latest()->paginate(20);
+        return NotificationCampaign::withCount(['runs'])
+            ->withSum('runs as delivery_count', 'id')
+            ->latest()
+            ->paginate(20);
     }
 
     public function revokeCampaign($id, NotificationCampaignService $service)
@@ -123,6 +104,7 @@ class NotificationsController extends Controller
     {
         $notification = auth()->user()->notifications()->whereKey($id)->firstOrFail();
         $notification->markAsRead();
+        $notification->refresh();
 
         return [
             'title' => $notification->data['title'] ?? '',
