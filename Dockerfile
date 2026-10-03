@@ -61,7 +61,7 @@ RUN composer dump-autoload -o --no-dev -n && \
     sed 's/DB_CONNECTION=mysql/DB_CONNECTION=sqlite/' -i storage/.env && \
     sed 's/DB_DATABASE=blessingskin/DB_DATABASE=\/app\/storage\/database\.db/' -i storage/.env
 
-FROM php:8.3-apache
+FROM php:8.3-fpm-bookworm
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
@@ -72,13 +72,15 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
 WORKDIR /app
 
 COPY --from=builder /app ./
+COPY docker-entrypoint-fpm.sh /usr/local/bin/docker-entrypoint-fpm.sh
 
-ENV APACHE_DOCUMENT_ROOT /app/public
-RUN chown -R www-data:www-data . && \
-    sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf && \
-    sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf && \
-    a2enmod rewrite headers
+RUN chmod +x /usr/local/bin/docker-entrypoint-fpm.sh && \
+    chown -R www-data:www-data /app
 
-EXPOSE 80
+ENV PUBLIC_ASSETS_DIR=/opt/public-assets
+EXPOSE 9000
 
-VOLUME ["/app/storage"]
+VOLUME ["/app/storage", "/opt/public-assets"]
+
+ENTRYPOINT ["docker-entrypoint-fpm.sh"]
+CMD ["php-fpm", "-F"]
