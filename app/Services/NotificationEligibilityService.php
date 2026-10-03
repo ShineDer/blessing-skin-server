@@ -13,30 +13,34 @@ class NotificationEligibilityService
     public function deliverFor($user): int
     {
         $count = 0;
-        $campaigns = NotificationCampaign::where('status', 'published')->where('popup_enabled', true)->where('publicity_enabled', true)->where('public_days', '>', 0)->where(function ($q) { $q->whereNull('expires_at')->orWhere('expires_at', '>', now()); })->get();
+        $campaigns = NotificationCampaign::where('status', 'published')->where('popup_enabled', true)->where('publicity_enabled', true)->where('public_days', '>', 0)->where('expires_at', '>', now())->get();
         foreach ($campaigns as $campaign) {
             $run = $campaign->runs()->latest('id')->first();
             if (!$run || !$this->eligible($campaign, $run, $user)) continue;
             $delivery = NotificationDelivery::firstOrCreate(['campaign_run_id' => $run->id, 'user_id' => $user->uid], ['eligible' => true]);
             if (!$delivery->delivered) {
-                $notification = new SiteMessage($campaign->title, $campaign->content, [
-                    'campaign_id' => $campaign->id,
-                    'campaign_run_id' => $run->id,
-                    'delivery_id' => $delivery->id,
-                    'popup_enabled' => true,
-                    'content_html' => $campaign->content_html,
-                ]);
-                Notification::send($user, $notification);
-                $notificationId = $user->notifications()
-                    ->where('type', SiteMessage::class)
-                    ->where('data', 'like', '%delivery_id%'.$delivery->id.'%')
-                    ->latest('created_at')
-                    ->value('id');
-                if (!$notificationId) {
-                    throw new \RuntimeException('Notification record was not created for delivery '.$delivery->id);
+                try {
+                    $notification = new SiteMessage($campaign->title, $campaign->content, [
+                        'campaign_id' => $campaign->id,
+                        'campaign_run_id' => $run->id,
+                        'delivery_id' => $delivery->id,
+                        'popup_enabled' => true,
+                        'content_html' => $campaign->content_html,
+                    ]);
+                    Notification::send($user, $notification);
+                    $notificationId = $user->notifications()
+                        ->where('type', SiteMessage::class)
+                        ->where('data', 'like', '%delivery_id%'.$delivery->id.'%')
+                        ->latest('created_at')
+                        ->value('id');
+                    if (!$notificationId) {
+                        throw new \RuntimeException('Notification record was not created for delivery '.$delivery->id);
+                    }
+                    $delivery->update(['delivered' => true, 'notification_id' => $notificationId]);
+                    $count++;
+                } catch (\Throwable $e) {
+                    $delivery->update(['failure_reason' => \Illuminate\Support\Str::limit($e->getMessage(), 1000)]);
                 }
-                $delivery->update(['delivered' => true, 'notification_id' => $notificationId]);
-                $count++;
             }
         }
         return $count;

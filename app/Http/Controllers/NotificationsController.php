@@ -34,7 +34,7 @@ class NotificationsController extends Controller
     public function campaigns()
     {
         return NotificationCampaign::withCount(['runs'])
-            ->withSum('runs as delivery_count', 'id')
+            ->with(['runs' => fn ($query) => $query->latest('id')->limit(1)])
             ->latest()
             ->paginate(20);
     }

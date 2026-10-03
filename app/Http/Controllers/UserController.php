@@ -74,11 +74,24 @@ class UserController extends Controller
             'extra' => [
                 'unverified' => option('require_verification') && !$user->verified,
                 'popupNotifications' => $user->unreadNotifications
-                    ->filter(fn ($notification) => (bool) ($notification->data['popup_enabled'] ?? false))
+                    ->filter(function ($notification) {
+                        $campaignId = $notification->data['campaign_id'] ?? null;
+                        if (!$campaignId || empty($notification->data['popup_enabled'])) {
+                            return false;
+                        }
+
+                        $campaign = \App\Models\NotificationCampaign::find($campaignId);
+                        if (!$campaign || !$campaign->popup_enabled) {
+                            return false;
+                        }
+
+                        return !$campaign->publicity_enabled
+                            || $campaign->is_publicity_active;
+                    })
                     ->map(fn ($notification) => [
                         'id' => $notification->id,
                         'title' => $notification->data['title'] ?? '',
-                        'content' => $notification->data['content_html'] ?? $notification->data['content'] ?? '',
+                        'content' => app(\App\Services\NotificationMarkdownService::class)->render($notification->data['content'] ?? ''),
                     ])->values(),
             ],
         ]);
