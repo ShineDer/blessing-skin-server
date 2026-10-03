@@ -32,14 +32,6 @@ notifications:
     reopen: Reopen publicity
     reopen-confirm: Reopen publicity for this notification? A new publicity period will begin.
     empty: No sent notifications.
-  sent:
-    title: Sent notifications
-    audience: Audience
-    time: Sent at
-    status: Status
-    revoke: Revoke
-    revoke-confirm: Revoke this notification campaign?
-    empty: No sent notifications.
   popup-enabled: Show as a popup
   public-days: Public period (days)
   public-days-help: When enabled, eligible users see this notification popup once during this period.
