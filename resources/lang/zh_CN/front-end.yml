@@ -141,6 +141,17 @@ user:
     message: 你必须验证你的邮箱才能正常使用本站的皮肤托管等功能。没有收到验证邮件？
     resend: 点击这里再次发送。
     sending: 正在发送……
+  notifications:
+    title: 站内通知
+    mark-all-read: 全部标记为已读
+    mark-unread: 标记为未读
+    mark-all-read-warning: 确定要将全部通知标记为已读吗？此操作可能导致你忽视部分重要通知。
+    delete-warning: 确定要删除这条通知吗？删除后不可恢复。
+    retention: 自动删除已读通知：
+    retention-forever: 永久保留
+    days: 天
+    retention-saved: 通知保留设置已保存
+    retention-warning: 缩短保留期限可能永久删除已读通知，未读通知不会被删除。确定继续吗？
   oauth:
     id: 客户端 ID
     name: 应用名
