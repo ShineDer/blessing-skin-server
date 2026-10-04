@@ -45,6 +45,7 @@ const NotificationsList: React.FC = () => {
   }, [])
 
   const read = async (id: string) => {
+    const wasUnread = notifications.some((notification) => notification.id === id && !notification.read && !notification.read_at)
     const { title, content, time } = await fetch.post<{
       title: string
       content: string
@@ -70,6 +71,7 @@ const NotificationsList: React.FC = () => {
           : notification,
       ),
     )
+    if (!wasUnread) return
     const nextCount = Math.max(0, unreadCount - 1)
     setExternalUnreadCount(nextCount)
     updateUnreadBadges(nextCount)
@@ -90,8 +92,8 @@ const NotificationsList: React.FC = () => {
       </a>
       <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
         {hasUnread ? (
-          notifications.map((notification) => (
-            <>
+          notifications.filter((notification) => !notification.read && !notification.read_at).map((notification) => (
+            <React.Fragment key={notification.id}>
               <a
                 href="#"
                 className="dropdown-item"
@@ -102,7 +104,7 @@ const NotificationsList: React.FC = () => {
                 {notification.title}
               </a>
               <div className="dropdown-divider"></div>
-            </>
+            </React.Fragment>
           ))
         ) : (
           <p className="text-center text-muted pt-2 pb-2">{noUnreadText}</p>

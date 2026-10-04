@@ -69,7 +69,6 @@ const Notifications: React.FC = () => {
       const count = Math.max(0, unreadCount - 1)
       setUnreadCount(count)
       updateUnreadBadges(count)
-      document.dispatchEvent(new CustomEvent('notificationUnreadCountChanged', { detail: count }))
     }
     await showModal({
       mode: 'alert',
@@ -87,6 +86,17 @@ const Notifications: React.FC = () => {
     updateUnreadBadges(0)
     document.dispatchEvent(new CustomEvent('notificationUnreadCountChanged', { detail: 0 }))
     setBusy(false)
+  }
+
+  const markRead = async (id: string) => {
+    const notification = page.data.find((item) => item.id === id)
+    if (!notification || notification.read_at || notification.read) return
+    await fetch.post(`/user/notifications/${id}/read`)
+    setPage((old) => ({ ...old, data: old.data.map((item) => item.id === id ? { ...item, read: true, read_at: new Date().toISOString() } : item) }))
+    const count = Math.max(0, unreadCount - 1)
+    setUnreadCount(count)
+    updateUnreadBadges(count)
+    document.dispatchEvent(new CustomEvent('notificationUnreadCountChanged', { detail: count }))
   }
 
   const markUnread = async (id: string) => {
@@ -133,10 +143,10 @@ const Notifications: React.FC = () => {
           </select>
         </label>
       </div>
-      <button className="btn btn-sm btn-outline-primary ml-auto flex-shrink-0" disabled={busy} onClick={() => void markAllRead()}>{t('user.notifications.mark-all-read')}</button>
+      <button className="btn btn-sm btn-outline-primary rounded-pill ml-auto flex-shrink-0" disabled={busy} onClick={() => void markAllRead()}>{t('user.notifications.mark-all-read')}</button>
     </div>
     <div className="card-body p-0">
-      {loading ? <p className="text-center p-4">...</p> : page.data.length === 0 ? <p className="text-center text-muted p-4">一片空白，连一缕阳光也不曾留下~<br /><small>有新的通知时会显示在这里</small></p> : <div className="list-group list-group-flush">{page.data.map((notification) => <div className={`list-group-item d-flex align-items-center ${notification.read_at || notification.read ? '' : 'font-weight-bold'}`} key={notification.id}><button className="btn btn-link text-left p-0 flex-grow-1 text-truncate" onClick={() => void read(notification)}>{notification.title}</button><div className="ml-auto flex-shrink-0"><button className="btn btn-sm btn-link" onClick={() => void markUnread(notification.id)}>{t('user.notifications.mark-unread')}</button><button className="btn btn-sm btn-link text-danger" aria-label="Delete" onClick={() => void remove(notification.id)}>&times;</button></div></div>)}</div>}
+      {loading ? <p className="text-center p-4">...</p> : page.data.length === 0 ? <p className="text-center text-muted p-4">一片空白，连一缕阳光也不曾留下~<br /><small>有新的通知时会显示在这里</small></p> : <div className="list-group list-group-flush">{page.data.map((notification) => <div className={`list-group-item d-flex align-items-center ${notification.read_at || notification.read ? '' : 'font-weight-bold'}`} key={notification.id}><button className="btn btn-link text-left p-0 flex-grow-1 text-truncate notification-title" style={{ color: 'var(--g-ink)' }} onClick={() => void read(notification)}>{notification.title}</button><div className="ml-auto flex-shrink-0 d-flex align-items-center"><button className={`btn btn-sm rounded-pill mr-1 ${notification.read_at || notification.read ? 'btn-outline-secondary' : 'btn-primary'}`} onClick={() => void (notification.read_at || notification.read ? markUnread(notification.id) : markRead(notification.id)}>{t(notification.read_at || notification.read ? 'user.notifications.mark-unread' : 'user.notifications.mark-read')}</button><button className="btn btn-sm btn-danger rounded-square notification-delete" title={t('user.notifications.delete')} aria-label={t('user.notifications.delete')} onClick={() => void remove(notification.id)}><i className="fas fa-trash-alt" aria-hidden="true"></i></button></div></div>)}</div>}
     </div>
     <div className="card-footer"><Pagination page={page.current_page} totalPages={page.last_page} onChange={(next) => void load(next)} /></div>
   </div>
