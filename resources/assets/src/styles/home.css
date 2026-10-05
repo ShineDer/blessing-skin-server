@@ -88,6 +88,24 @@ body {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+.main-button-secondary {
+  display: inline-block;
+  margin-top: 0.9em;
+  color: rgba(255, 255, 255, 0.85);
+  padding: 0.5em 1.5em;
+  border-radius: 5px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  font-size: 100%;
+  transition: color 0.25s ease-in-out, border-color 0.25s ease-in-out,
+    background-color 0.25s ease-in-out;
+}
+.main-button-secondary:hover {
+  color: #fff;
+  border-color: #fff;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
 #fixed-bg {
   position: fixed;
   z-index: -1;

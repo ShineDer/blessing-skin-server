@@ -5,6 +5,7 @@ user-center: Меню пользователя
 logout: Выйти
 login: Войти
 register: Зарегистрироваться
+login-existing: Войти в существующий аккаунт
 profile: Профиль
 notifications: Центр уведомлений
 admin-panel: Панель администратора

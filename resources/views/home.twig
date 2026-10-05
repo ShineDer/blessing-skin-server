@@ -70,6 +70,13 @@
               </a>
             {% endif %}
           </p>
+          {% if not auth_check() %}
+            <p>
+              <a href="{{ url('auth/login') }}" class="main-button-secondary">
+                {{ trans('general.login-existing') }}
+              </a>
+            </p>
+          {% endif %}
         </div>
       </div>
 

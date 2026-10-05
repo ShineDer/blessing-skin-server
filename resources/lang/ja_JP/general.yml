@@ -5,6 +5,7 @@ user-center: ユーザーセンター
 logout: ログアウト
 login: ログイン
 register: 新規登録
+login-existing: 既存のアカウントでログイン
 profile: プロフィール
 notifications: 通知
 admin-panel: 管理パネル

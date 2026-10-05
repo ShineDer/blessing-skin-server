@@ -4,6 +4,7 @@ user-center: User Center
 logout: Log Out
 login: Log In
 register: Register Now
+login-existing: Log In to Existing Account
 profile: User Profile
 notifications: Notifications
 admin-panel: Admin Panel

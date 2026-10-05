@@ -5,6 +5,7 @@ user-center: Centro de usuario
 logout: Cerrar sesión
 login: Iniciar sesión
 register: Crear cuenta
+login-existing: Iniciar sesión en una cuenta existente
 profile: Perfil de usuario
 notifications: Centro de notificaciones
 admin-panel: Panel de administración
