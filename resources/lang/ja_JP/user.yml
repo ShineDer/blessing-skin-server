@@ -2,6 +2,17 @@
 sign-success: Signed successfully. You got :score scores.
 announcement: Announcement
 no-unread: No new notifications.
+notifications:
+  title: 通知
+  mark-all-read: すべて既読にする
+  mark-all-read-warning: すべての通知を既読にしますか？重要な通知を見落とす可能性があります。
+  mark-unread: 未読にする
+  delete-warning: この通知を削除しますか？この操作は元に戻せません。
+  retention: '既読通知を自動削除:'
+  retention-forever: 永久に保持
+  days: 日
+  retention-saved: 通知の保持設定を保存しました
+  retention-warning: 保持期間を短縮すると、既読の通知が完全に削除される場合があります。未読の通知は削除されません。続行しますか？
 verification:
   disabled: Email verification is not available.
   frequent-mail: You click the send button too fast. Wait for 60 secs, guy.

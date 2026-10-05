@@ -38,4 +38,8 @@ return [
         'name' => 'Русский язык',
         'short_name' => 'ru',
     ],
+    'ja_JP' => [
+        'name' => '日本語',
+        'short_name' => 'ja',
+    ],
 ];

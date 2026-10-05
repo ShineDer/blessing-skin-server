@@ -15,10 +15,36 @@ notifications:
     title: 受信者
     all: 全てのユーザ
     normal: 一般ユーザー
+    verified: 認証済みユーザー
     uid: UIDを指定
     email: メールアドレスを指定
   title: トップ
   content: コンテンツ (Markdown サポート されて いませ)
+  sent:
+    title: 送信済み通知
+    audience: 受信者
+    time: 送信日時
+    status: ステータス
+    revoke: 取り消す
+    revoke-confirm: この通知を取り消しますか？すべてのユーザーから削除され、復元できません。
+    end-publicity: 公示を終了
+    end-confirm: 公示を今すぐ終了しますか？新しいユーザーにポップアップは表示されなくなり、通常の通知になります。
+    modify-publicity: 公示期間を変更
+    modify-publicity-prompt: 新しい公示期間の合計日数を入力してください（1〜365）。経過時間より短い場合は 1 日が残ります。
+    modify-publicity-invalid: 1〜365 の整数を入力してください。
+    modify-publicity-failed: 公示期間の変更に失敗しました。
+    reopen: 公示を再開
+    reopen-confirm: この通知の公示を再開しますか？新しい公示期間が始まります。
+    empty: 送信済みの通知はありません。
+    refresh: 更新
+    loading: 読み込み中…
+    prev: 前へ
+    next: 次へ
+    publicity: 公示通知
+    public-days-zero: 0 の場合、通常のポップアップ通知として扱われます。
+  popup-enabled: ポップアップで表示
+  public-days: 公示期間（日）
+  public-days-help: 有効にすると、対象ユーザーは公示期間中に一度この通知のポップアップを見ます。
 users:
   operations:
     non-existent: ユーザーが存在しません。

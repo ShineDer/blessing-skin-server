@@ -12,6 +12,7 @@ upload:
   private-score-notice: Se gastarán más puntuaciones por configurarlo como privado. Se le cobrará :score por cada almacenamiento KB.
   invalid-size: Archivo :type no válido (ancho :width, altura :height)
   invalid-hd-skin: Skin HD inválida (ancho y altura debe ser divisible por 32)
+  too-wide: La textura es demasiado ancha (:widthpx). El ancho máximo permitido es :maxWidthpxpx
   lack-score: No tienes suficiente puntuación para subir esta textura.
   repeated: La textura ya está cargada por otra persona. Puede añadirla a su armario directamente.
   success: Textura :name se ha subido exitosamente.

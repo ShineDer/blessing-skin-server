@@ -98,6 +98,9 @@ general:
   max_upload_file_size:
     title: Max Upload Size
     hint: "Limit specified in php.ini: :size"
+  max_texture_width:
+    title: テクスチャの最大幅
+    hint: アップロードできるテクスチャの最大幅。64 の整数倍である必要があります
   player_name_rule:
     title: Player Name Rule
     official: Letters, numbers and underscores (Mojang's official rule)

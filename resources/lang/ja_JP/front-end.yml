@@ -154,6 +154,8 @@ user:
     days: 日
     retention-saved: 通知の保持設定を保存しました
     retention-warning: 保持期間を短縮すると、既読の通知が完全に削除される場合があります。未読の通知は削除されません。続行しますか？
+    empty: まっさら、陽の光の一滴も残っていない〜
+    empty-hint: 新しい通知が届くとここに表示されます
   oauth:
     id: Client ID
     name: App Name
@@ -254,10 +256,14 @@ general:
   more: More
   tip: Tip
   noResult: No result.
-  texturePreview: Texture Preview
+  texturePreview: テクスチャプレビュー
   walk: Walk
   run: Run
-  rotation: Rotation
+  rotation: 回転に切り替え
+  playAnimation: アニメーションを再生
+  pauseAnimation: アニメーションを一時停止
+  switchAnimation: アニメーションを切り替え
+  switchCapeElytra: マント / エリトラを切り替え
   pause: Pause
   reset: Reset
   skinlib: Skin Library

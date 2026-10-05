@@ -98,6 +98,9 @@ general:
   max_upload_file_size:
     title: 最大檔案上傳大小
     hint: "php.ini 設定的最大上傳大小： :size"
+  max_texture_width:
+    title: 材質最大寬度
+    hint: 上傳材質的最大寬度，必須爲 64 的整數倍
   player_name_rule:
     title: 角色名規則
     official: 字元、數字和下劃綫（Mojang 官方角色名規則）

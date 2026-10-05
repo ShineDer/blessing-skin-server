@@ -76,6 +76,7 @@ numeric: 'Поле :attribute должно быть числом.'
 password: Неверный пароль.
 present: 'Поле :attribute должно присутствовать.'
 recaptcha: 'Проверка reCAPTCHA не удалась.'
+turnstile: 'Проверка Cloudflare Turnstile не пройдена.'
 regex: 'Поле :attribute имеет ошибочный формат.'
 required: 'Поле :attribute обязательно для заполнения.'
 required_if: 'Поле :attribute обязательно для заполнения, когда :other равно :value.'

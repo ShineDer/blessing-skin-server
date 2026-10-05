@@ -12,6 +12,7 @@ upload:
   private-score-notice: 將材質設爲私有將花費更多積分。您將為每一 KB 花費 :score 積分。
   invalid-size: 無效的 :type 文件（寬度 :width，高度 :height）
   invalid-hd-skin: 無效的皮膚（寬度與高度應爲 32 的整倍數）
+  too-wide: 材質太寬（:widthpx）。允許的最大寬度爲 :maxWidthpxpx
   lack-score: 您沒有足夠的積分上載材質。
   repeated: 材質已被其他人上載過。您可以直接將其添加到衣櫃。
   success: 材質 :name 上載成功。

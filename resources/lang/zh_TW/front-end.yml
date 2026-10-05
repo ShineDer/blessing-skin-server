@@ -154,6 +154,8 @@ user:
     days: 天
     retention-saved: 通知保留設置已保存
     retention-warning: 縮短保留期限可能永久刪除已讀通知，未讀通知不會被刪除。確定繼續嗎？
+    empty: 一片空白，連一縷陽光也不曾留下~
+    empty-hint: 有新的通知時會顯示在這裡
   oauth:
     id: 客戶端 ID
     name: 應用程式名稱
@@ -258,6 +260,10 @@ general:
   walk: 行走
   run: 奔跑
   rotation: 旋轉
+  playAnimation: 播放動畫
+  pauseAnimation: 暫停動畫
+  switchAnimation: 切換動畫
+  switchCapeElytra: 切換披風 / 鞘翅
   pause: 暫停
   reset: 重置
   skinlib: 皮膚庫

@@ -154,6 +154,8 @@ user:
     days: días
     retention-saved: Retención de notificaciones guardada
     retention-warning: Reducir la retención puede eliminar permanentemente las notificaciones leídas; las no leídas no se eliminarán. ¿Continuar?
+    empty: Nada por aquí, ni un rayo de sol~
+    empty-hint: Las nuevas notificaciones aparecerán aquí.
   oauth:
     id: ID de cliente
     name: Nombre de app
@@ -258,6 +260,10 @@ general:
   walk: Caminar
   run: Correr
   rotation: Girar
+  playAnimation: Reproducir animación
+  pauseAnimation: Pausar animación
+  switchAnimation: Cambiar animación
+  switchCapeElytra: Cambiar capa / élitro
   pause: Pausar
   reset: Restablecer
   skinlib: Colección de skins

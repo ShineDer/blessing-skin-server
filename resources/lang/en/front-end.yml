@@ -156,6 +156,8 @@ user:
     days: days
     retention-saved: Notification retention saved
     retention-warning: Shortening retention may permanently delete read notifications; unread notifications will not be deleted. Continue?
+    empty: Nothing here yet — not even a ray of sunshine~
+    empty-hint: New notifications will show up here.
   oauth:
     id: Client ID
     name: App Name

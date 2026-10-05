@@ -150,8 +150,8 @@ const Notifications: React.FC = () => {
         <p className="text-center p-4">...</p>
       ) : page.data.length === 0 ? (
         <p className="text-center text-muted p-4">
-          一片空白，连一缕阳光也不曾留下~<br />
-          <small>有新的通知时会显示在这里</small>
+          {t('user.notifications.empty')}<br />
+          <small>{t('user.notifications.empty-hint')}</small>
         </p>
       ) : (
         <div className="list-group list-group-flush">

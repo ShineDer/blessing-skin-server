@@ -154,6 +154,8 @@ user:
     days: 天
     retention-saved: 通知保留设置已保存
     retention-warning: 缩短保留期限可能永久删除已读通知，未读通知不会被删除。确定继续吗？
+    empty: 一片空白，连一缕阳光也不曾留下~
+    empty-hint: 有新的通知时会显示在这里
   oauth:
     id: 客户端 ID
     name: 应用名

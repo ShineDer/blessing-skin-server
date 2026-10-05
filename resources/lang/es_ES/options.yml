@@ -98,6 +98,9 @@ general:
   max_upload_file_size:
     title: Tamaño máximo de subida
     hint: "Límite especificado en php.ini: :size"
+  max_texture_width:
+    title: Ancho máximo de textura
+    hint: Ancho máximo de las texturas subidas, debe ser un múltiplo entero de 64
   player_name_rule:
     title: Regla de nombre de jugador
     official: Letras, números y guiones bajos (regla oficial de Mojang)
