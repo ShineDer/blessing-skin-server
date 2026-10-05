@@ -15,10 +15,36 @@ notifications:
     title: Receptor
     all: Todos los Usuarios
     normal: Usuarios Normales
+    verified: Usuarios verificados
     uid: UID especificado
     email: Email especificado
   title: Título
   content: Contenido (Markdown está soportado).
+  sent:
+    title: Notificaciones enviadas
+    audience: Destinatarios
+    time: Enviado el
+    status: Estado
+    revoke: Revocar
+    revoke-confirm: ¿Revocar esta notificación? Se eliminará de todos los usuarios y no se puede restaurar.
+    end-publicity: Finalizar anuncio
+    end-confirm: ¿Finalizar el anuncio ahora? Los nuevos usuarios ya no recibirán la ventana emergente y esta notificación pasará a ser normal.
+    modify-publicity: Modificar periodo
+    modify-publicity-prompt: Introduce el nuevo periodo de anuncio en días (1-365). Si el nuevo plazo es anterior al tiempo transcurrido, se conservará 1 día.
+    modify-publicity-invalid: Introduce un número entero entre 1 y 365.
+    modify-publicity-failed: No se pudo actualizar el periodo del anuncio.
+    reopen: Reabrir anuncio
+    reopen-confirm: ¿Reabrir el anuncio de esta notificación? Comenzará un nuevo periodo.
+    empty: No hay notificaciones enviadas.
+    refresh: Actualizar
+    loading: Cargando…
+    prev: Anterior
+    next: Siguiente
+    publicity: Anuncio público
+    public-days-zero: Cuando se establece en 0, es una notificación emergente normal.
+  popup-enabled: Mostrar como ventana emergente
+  public-days: Periodo de anuncio (días)
+  public-days-help: Cuando está activado, los usuarios elegibles ven esta notificación emergente una vez durante este periodo.
 users:
   operations:
     non-existent: No existe ese usuario.

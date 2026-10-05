@@ -15,10 +15,36 @@ notifications:
     title: 接收人
     all: 所有用戶
     normal: 常規用戶
+    verified: 已驗證使用者
     uid: 指定用戶 ID
     email: 指定電子郵件地址
   title: 標題
   content: 內容（支援 Markdown 語法）
+  sent:
+    title: 已寄送通知
+    audience: 接收者
+    time: 寄送時間
+    status: 狀態
+    revoke: 撤回
+    revoke-confirm: 確定要撤回這則通知嗎？撤回後將從所有使用者的通知清單中刪除，且無法復原。
+    end-publicity: 結束公示
+    end-confirm: 確定要立即結束公示嗎？之後新使用者不會再收到彈窗，這則通知會轉為一般通知。
+    modify-publicity: 修改公示期
+    modify-publicity-prompt: 請輸入新的公示期總天數（1-365）。若新期限早於已公示時長，將自動保留 1 天。
+    modify-publicity-invalid: 請輸入 1 到 365 之間的整數。
+    modify-publicity-failed: 修改公示期失敗，請重試。
+    reopen: 重新公示
+    reopen-confirm: 確定要重新開啟這則通知的公示嗎？這會開始新的公示週期。
+    empty: 暫無已寄送通知
+    refresh: 重新整理
+    loading: 正在載入…
+    prev: 上一頁
+    next: 下一頁
+    publicity: 公示通知
+    public-days-zero: 數值為 0 時該通知按一般彈窗通知處理。
+  popup-enabled: 以彈窗顯示
+  public-days: 公示期（天）
+  public-days-help: 啟用後，符合條件的使用者將在公示期內看到一次通知彈窗。
 users:
   operations:
     non-existent: 沒有這個用戶。
