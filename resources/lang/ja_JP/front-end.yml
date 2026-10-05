@@ -55,61 +55,61 @@ skinlib:
     likes: 最もいいねが多い
   emptyTextureName: テクスチャ名が空です。
   emptyUploadFile: ファイルがアップロードされていません。
-  fileExtError: 'Error: Textures should be PNG files.'
-  uploading: Uploading
-  setAsPrivate: Set as Private
-  setAsPublic: Set as Public
-  setPublicNotice: Sure to set this as public texture?
-  setPrivateNotice: Sure to set this as private texture?
-  deleteNotice: Are you sure to delete this texture?
-  setNewTextureModel: "Please select a new texture model:"
+  fileExtError: 'エラー: テクスチャは PNG ファイルである必要があります。'
+  uploading: アップロード中
+  setAsPrivate: 非公開に設定
+  setAsPublic: 公開に設定
+  setPublicNotice: このテクスチャを公開に設定してもよろしいですか？
+  setPrivateNotice: このテクスチャを非公開に設定してもよろしいですか？
+  deleteNotice: このテクスチャを削除してもよろしいですか？
+  setNewTextureModel: '新しいテクスチャモデルを選択してください:'
   upload:
-    texture-name: Texture Name
-    texture-type: Texture Type
-    select-file: Select File
-    privacy-notice: Prevent it from being visible at skin library.
-    set-as-private: Make it Private
-    button: Upload
-    cost: It costs you about :score score.
-    award: You'll be awarded :score score(s) by uploading public texture.
+    texture-name: テクスチャ名
+    texture-type: テクスチャの種類
+    select-file: ファイルを選択
+    privacy-notice: スキンライブラリで表示されないようにします。
+    set-as-private: 非公開にする
+    button: アップロード
+    cost: 約 :score スコアを消費します。
+    award: 公開テクスチャをアップロードすると :score スコアが付与されます。
   show:
-    anonymous: You must login to use closets
-    likes: People who like this
-    detail: Details
-    name: Texture Name
-    edit: Edit
-    model: Applicable Model
-    size: File Size
-    uploader: Uploader
-    upload-at: Upload At
-    download: Download
-    delete-texture: Delete Texture
-    manage-notice: The texture which was deleted or setted to private will be removed from the closet of everyone who had favorited it.
+    anonymous: クローゼットを使用するにはログインが必要です
+    likes: いいねした人
+    detail: 詳細
+    name: テクスチャ名
+    edit: 編集
+    model: 対応モデル
+    size: ファイルサイズ
+    uploader: アップロード者
+    upload-at: アップロード日時
+    download: ダウンロード
+    delete-texture: テクスチャを削除
+    manage-notice: 削除または非公開に設定されたテクスチャは、お気に入りに追加したすべてのユーザーのクローゼットから削除されます。
   report:
-    title: Report
-    reason: Tell us reason please.
-    positive: To encourage positive contributions to the skinlib, we will reward who reported inappropriate content with :score scores. However, if any malicious reporting behaviors were found, all scores rewarded will be taken back.
-    negative: To mitigate the impact of malicious reports, we will require :score scores for submitting a texture report. Don't worry. The suspended scores and additional reward will be sent to your account after your report reviewed by administrators.
+    title: 通報
+    reason: 理由を教えてください。
+    positive: スキンライブラリへの積極的な貢献を促すため、不適切なコンテンツを通報した人に :score スコアを報酬として差し上げます。ただし、悪意のある通報行為が確認された場合、付与されたスコアはすべて回収されます。
+    negative: 悪意のある通報の影響を軽減するため、テクスチャの通報には :score スコアが必要です。ご安心ください。通報が管理者に確認された後、保留中のスコアと追加報酬がアカウントに送られます。
 user:
-  signRemainingTime: 'Available after :time :unit'
-  timeUnitHour: h
-  timeUnitMin: min
+  signRemainingTime: ':time :unit 後に利用可能'
+  timeUnitHour: 時間
+  timeUnitMin: 分
   emptyClosetMsg: >-
-    <p>Nothing in your closet...</p><p>Why not explore the <a href=":url">Skin Library</a> for a while?</p>
-  renameItem: Rename item
-  removeItem: Remove from closet
-  setAsAvatar: Set as avatar
-  viewInSkinlib: View in skin library
-  switch2dPreview: Switch to 2D Preview
-  switch3dPreview: Switch to 3D Preview
-  removeFromClosetNotice: Sure to remove this texture from your closet?
-  emptySelectedTexture: No texture is selected.
-  renameClosetItem: 'Set a new name for this item:'
-  changePlayerName: 'Please enter the player name:'
-  emptyPlayerName: Empty player name.
-  deletePlayer: Sure to delete this player?
-  deletePlayerNotice: It's permanent. No backups.
-  chooseClearTexture: Choose texture types you want to clear
+    <p>クローゼットに何もありません...</p><p>しばらく<a href=":url">スキンライブラリ</a>を探索してみませんか？</p>
+  renameItem: アイテムの名前を変更
+  removeItem: クローゼットから削除
+  setAsAvatar: アバターに設定
+  viewInSkinlib: スキンライブラリで表示
+  switch2dPreview: 2D プレビューに切り替え
+  switch3dPreview: 3D プレビューに切り替え
+  removeFromClosetNotice: このテクスチャをクローゼットから削除してもよろしいですか？
+  emptySelectedTexture: テクスチャが選択されていません。
+  renameClosetItem: 'このアイテムの新しい名前を設定:'
+  changePlayerName: 'プレイヤー名を入力してください:'
+  emptyPlayerName: プレイヤー名が空です。
+  deletePlayer: このプレイヤーを削除してもよろしいですか？
+  deletePlayerNotice: これは取り消せません。バックアップもありません。
+  chooseClearTexture: クリアするテクスチャの種類を選択
   noClearChoice: タイプが選択されていません
   setAvatar: 本当にあなたのアバターに設定しますか？
   setAvatarNotice: 皮の頭部部分は、使用されます。
@@ -130,17 +130,17 @@ user:
   score-notice: 導入を表示するスコアをクリックします。
   sign: 署名
   player:
-    operation: Operations
-    edit-pname: Edit Name
-    delete-texture: Clear Textures
-    delete-player: Delete
-    add-player: Add new player
-    texture-empty: Nothing
+    operation: 操作
+    edit-pname: 名前を編集
+    delete-texture: テクスチャをクリア
+    delete-player: 削除
+    add-player: 新しいプレイヤーを追加
+    texture-empty: なし
   verification:
-    title: Verify Your Account
-    message: You must verify your email address before using the skin hosting service. Haven't received the email?
-    resend: Click here to send again.
-    sending: Sending...
+    title: アカウントを認証
+    message: スキンホスティングサービスを利用する前に、メールアドレスを認証する必要があります。メールが届いていませんか？
+    resend: ここをクリックして再送信。
+    sending: 送信中...
   notifications:
     title: 通知
     mark-all-read: すべて既読にする
@@ -157,136 +157,136 @@ user:
     empty: まっさら、陽の光の一滴も残っていない〜
     empty-hint: 新しい通知が届くとここに表示されます
   oauth:
-    id: Client ID
-    name: App Name
-    secret: Client Secret
-    redirect: Callback URL
-    modifyName: Modify app name.
-    modifyUrl: Modify callback URL.
-    create: Create New App
-    confirmRemove: Are you sure to delete this app? You won't be able to undo this.
+    id: クライアント ID
+    name: アプリ名
+    secret: クライアントシークレット
+    redirect: コールバック URL
+    modifyName: アプリ名を変更。
+    modifyUrl: コールバック URL を変更。
+    create: 新しいアプリを作成
+    confirmRemove: このアプリを削除してもよろしいですか？元に戻すことはできません。
 admin:
-  operationsTitle: Operations
-  permission: Permission
-  deleteUser: Delete
-  changeEmail: Edit Email
-  newUserEmail: 'Please enter the new email:'
-  verification: Email Verification
-  toggleVerification: Toggle Verification Status
-  changeNickName: Edit Nickname
-  newUserNickname: 'Please enter the new nickname:'
-  changePassword: Edit Password
-  newUserPassword: 'Please enter the new password:'
-  changeScore: Edit Score
-  newScore: 'Please enter the new score:'
-  changePermission: Change permission
-  newPermission: 'Please select new permission:'
-  deleteUserNotice: Are you sure to delete this user? It' permanent.
-  banned: Banned
-  normal: Normal
-  admin: Admin
-  superAdmin: Super Admin
-  unverified: Unverified
-  verified: Verified
+  operationsTitle: 操作
+  permission: 権限
+  deleteUser: 削除
+  changeEmail: メールアドレスを編集
+  newUserEmail: '新しいメールアドレスを入力してください:'
+  verification: メール認証
+  toggleVerification: 認証状態を切り替え
+  changeNickName: ニックネームを編集
+  newUserNickname: '新しいニックネームを入力してください:'
+  changePassword: パスワードを編集
+  newUserPassword: '新しいパスワードを入力してください:'
+  changeScore: スコアを編集
+  newScore: '新しいスコアを入力してください:'
+  changePermission: 権限を変更
+  newPermission: '新しい権限を選択してください:'
+  deleteUserNotice: このユーザーを削除してもよろしいですか？取り消せません。
+  banned: BAN 済み
+  normal: 一般
+  admin: 管理者
+  superAdmin: スーパー管理者
+  unverified: 未認証
+  verified: 認証済み
   pidNotice: >-
-    Please enter the tid of texture. Inputing 0 can clear texture of this player.
-  changeTexture: Change Textures
-  changePlayerName: Change Player Name
-  changeOwner: Change Owner
-  textureType: Texture Type
-  deletePlayer: Delete
-  changePlayerOwner: 'Please enter the id of user which this player should be transferred to:'
-  deletePlayerNotice: Are you sure to delete this player? It' permanent.
-  changePlayerNameNotice: 'Please input new player name:'
-  emptyPlayerName: Player name cannot be empty.
-  configurePlugin: Configure
-  deletePlugin: Delete
-  noDependencies: No Dependencies
-  pluginTitle: Plugin
-  pluginAuthor: Author
-  pluginVersion: Version
-  pluginReadme: Read Me
-  pluginDescription: Description
-  pluginDependencies: Dependencies
-  installPlugin: Install
-  pluginInstalling: Installing...
-  updatePlugin: Update
-  pluginUpdating: Updating...
-  confirmUpdate: Are you sure to update ":plugin" from :old to :new?
-  enablePlugin: Enable
-  disablePlugin: Disable
-  confirmDeletion: Are you sure to delete this plugin?
-  uploadArchive: Upload Archive
-  uploadArchiveNotice: Install a plugin by uploading a Zip archive.
-  downloadRemote: Download From Remote
-  downloadRemoteNotice: Install a plugin by downloading a Zip archive from remote URL.
-  updateButton: Update Now
-  downloading: Downloading...
+    テクスチャの tid を入力してください。0 を入力するとこのプレイヤーのテクスチャをクリアできます。
+  changeTexture: テクスチャを変更
+  changePlayerName: プレイヤー名を変更
+  changeOwner: 所有者を変更
+  textureType: テクスチャの種類
+  deletePlayer: 削除
+  changePlayerOwner: 'このプレイヤーを移譲するユーザーの ID を入力してください:'
+  deletePlayerNotice: このプレイヤーを削除してもよろしいですか？取り消せません。
+  changePlayerNameNotice: '新しいプレイヤー名を入力してください:'
+  emptyPlayerName: プレイヤー名は空にできません。
+  configurePlugin: 設定
+  deletePlugin: 削除
+  noDependencies: 依存関係なし
+  pluginTitle: プラグイン
+  pluginAuthor: 作者
+  pluginVersion: バージョン
+  pluginReadme: README
+  pluginDescription: 説明
+  pluginDependencies: 依存関係
+  installPlugin: インストール
+  pluginInstalling: インストール中...
+  updatePlugin: 更新
+  pluginUpdating: 更新中...
+  confirmUpdate: 'プラグイン ":plugin" を :old から :new に更新してもよろしいですか？'
+  enablePlugin: 有効化
+  disablePlugin: 無効化
+  confirmDeletion: このプラグインを削除してもよろしいですか？
+  uploadArchive: アーカイブをアップロード
+  uploadArchiveNotice: Zip アーカイブをアップロードしてプラグインをインストールします。
+  downloadRemote: リモートからダウンロード
+  downloadRemoteNotice: リモート URL から Zip アーカイブをダウンロードしてプラグインをインストールします。
+  updateButton: 今すぐ更新
+  downloading: ダウンロード中...
   i18n:
-    group: Group
-    key: Key
-    text: Text
-    empty: (Empty)
-    modify: Modify
-    delete: Delete
-    updating: 'Please type new text:'
-    confirmDelete: Are you sure? This is irreversible.
+    group: グループ
+    key: キー
+    text: テキスト
+    empty: (空)
+    modify: 変更
+    delete: 削除
+    updating: '新しいテキストを入力してください:'
+    confirmDelete: よろしいですか？この操作は取り消せません。
 report:
-  tid: Texture ID
-  reporter: Reporter
-  reason: Reason
+  tid: テクスチャ ID
+  reporter: 通報者
+  reason: 理由
   status-title: 状態
   status:
-    - Pending
-    - Resolved
-    - Rejected
-  time: Report Time
-  delete: Delete
-  ban: Ban
-  reject: Reject
+    - 保留中
+    - 解決済み
+    - 却下
+  time: 通報日時
+  delete: 削除
+  ban: BAN
+  reject: 却下
 general:
-  skin: Skin
-  cape: Cape
-  fatalError: Fatal Error
-  confirmLogout: Sure to log out?
+  skin: スキン
+  cape: マント
+  fatalError: 致命的なエラー
+  confirmLogout: ログアウトしてもよろしいですか？
   confirm: OK
-  cancel: Cancel
-  submit: Submit
-  close: Close
-  more: More
-  tip: Tip
-  noResult: No result.
+  cancel: キャンセル
+  submit: 送信
+  close: 閉じる
+  more: もっと見る
+  tip: ヒント
+  noResult: 結果なし
   texturePreview: テクスチャプレビュー
-  walk: Walk
-  run: Run
+  walk: 歩く
+  run: 走る
   rotation: 回転に切り替え
   playAnimation: アニメーションを再生
   pauseAnimation: アニメーションを一時停止
   switchAnimation: アニメーションを切り替え
   switchCapeElytra: マント / エリトラを切り替え
-  pause: Pause
-  reset: Reset
-  skinlib: Skin Library
-  wait: Please wait...
-  csrf: This page is out-dated. Please refresh it.
+  pause: 一時停止
+  reset: リセット
+  skinlib: スキンライブラリ
+  wait: お待ちください...
+  csrf: このページは古いです。再読み込みしてください。
   user:
-    email: Email
-    nickname: Nick Name
-    score: Score
-    register-at: Registered At
+    email: メールアドレス
+    nickname: ニックネーム
+    score: スコア
+    register-at: 登録日時
   player:
-    owner: Owner
-    player-name: Player Name
-    previews: Texture Previews
-    last-modified: Last Modified
+    owner: 所有者
+    player-name: プレイヤー名
+    previews: テクスチャプレビュー
+    last-modified: 最終更新
 colors:
-  black: Black
-  white: White
-  gray: Gray
-  prev: Previous Background
-  next: Next Background
+  black: 黒
+  white: 白
+  gray: グレー
+  prev: 前の背景
+  next: 次の背景
 vendor:
   datatable:
-    search: Search
-    prev: Prev
-    next: Next
+    search: 検索
+    prev: 前へ
+    next: 次へ

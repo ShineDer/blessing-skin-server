@@ -77,29 +77,29 @@ customize:
   change-color:
     title: テーマの色を変更する
   colors:
-    navbar: Top Navigation Bar
+    navbar: トップナビゲーションバー
     sidebar:
-      dark: Sidebar (Dark)
-      light: Sidebar (Light)
+      dark: サイドバー（ダーク）
+      light: サイドバー（ライト）
 i18n:
-  add: Add New Language Line
-  added: Language line added.
-  updated: Language line updated.
-  deleted: Language line deleted.
+  add: 新しい言語行を追加
+  added: 言語行を追加しました。
+  updated: 言語行を更新しました。
+  deleted: 言語行を削除しました。
   group: グループ
   key: 鍵
   text: テキスト
-  tip: How can I use this page?
+  tip: このページの使い方は？
 status:
-  info: Information
-  health: Health
+  info: 情報
+  health: ヘルスチェック
   bs:
     name: Blessing Skin
     version: バージョン
-    env: Application Environment
-    debug: Debugging or Not?
-    commit: Commit
-    laravel: Laravel Version
+    env: アプリケーション環境
+    debug: デバッグモードかどうか
+    commit: コミット
+    laravel: Laravel バージョン
   server:
     name: サーバー
     php: PHP バージョン
@@ -110,55 +110,55 @@ status:
     type: サーバー
     host: ホスト
     port: ポート
-    username: Username
-    database: Database
-    prefix: Table Prefix
-  plugins: Enabled Plugins (:amount)
+    username: ユーザー名
+    database: データベース
+    prefix: テーブルプレフィックス
+  plugins: 有効なプラグイン (:amount)
 plugins:
-  readme: Read Me
+  readme: README
   operations:
-    title: Operations
-    enabled: ':plugin has been enabled.'
+    title: 操作
+    enabled: ':plugin を有効にしました。'
     unsatisfied:
-      notice: There are conflicts or unsatisfied dependencies in the plugin, therefore we can't enable it. Please install or update the plugins listed below, and disable those have conflicts.
-      disabled: 'The ":name" plugin is not enabled.'
-      version: 'The version of ":title" does not satisfies the constraint ":constraint".'
-      conflict: 'The ":title" plugin cannot run with this plugin at the same time.'
-    disabled: ':plugin has been disabled.'
-    deleted: The plugin was deleted successfully.
-    no-config-notice: The plugin is not installed or doesn't provide a configuration page.
-    no-readme-notice: The plugin doesn't contain a readme file.
-    not-found: No such plugin.
+      notice: プラグインに競合または未解決の依存関係があるため、有効化できません。以下にリストされたプラグインをインストールまたは更新し、競合するものを無効にしてください。
+      disabled: プラグイン ":name" が有効になっていません。
+      version: '":title" のバージョンが制約 ":constraint" を満たしていません。'
+      conflict: プラグイン ":title" はこのプラグインと同時に実行できません。
+    disabled: ':plugin を無効にしました。'
+    deleted: プラグインを削除しました。
+    no-config-notice: プラグインがインストールされていないか、設定ページがありません。
+    no-readme-notice: プラグインに readme ファイルが含まれていません。
+    not-found: そのようなプラグインはありません。
   market:
-    unresolved: There are conflicts or unsatisfied dependencies in the plugin, therefore we can't download it. Please install or update the plugins listed below, and disable those have conflicts.
-    connection-error: Unable to connect to the plugins registry. :error
-    non-existent: The plugin :plugin does not exist.
-    install-success: Plugin was installed.
+    unresolved: プラグインに競合または未解決の依存関係があるため、ダウンロードできません。以下にリストされたプラグインをインストールまたは更新し、競合するものを無効にしてください。
+    connection-error: プラグインレジストリに接続できません。 :error
+    non-existent: プラグイン :plugin は存在しません。
+    install-success: プラグインをインストールしました。
 update:
-  complete: Update completed
+  complete: 更新が完了しました
   info:
-    title: Update Information
-    up-to-date: Already up-to-date.
-    available: New version available.
+    title: 更新情報
+    up-to-date: すでに最新版です。
+    available: 新しいバージョンがあります。
     versions:
-      latest: "Latest Version:"
-      current: "Current Version:"
-    check-github: Check GitHub Releases
-    button: Update Now
+      latest: '最新バージョン:'
+      current: '現在のバージョン:'
+    check-github: GitHub Releases を確認
+    button: 今すぐ更新
   cautions:
-    title: Cautions
-    link: check out this.
+    title: 注意事項
+    link: こちらをご覧ください。
     text: |
-      Please choose update source according to your host's network environment.
-      Low-speed connection between update source and your host will cause long-time loading at checking and downloading page.
-      To change the default update source,
+      ホストのネットワーク環境に応じて更新ソースを選択してください。
+      更新ソースとホスト間の接続が低速な場合、確認とダウンロードのページで長時間の読み込みが発生します。
+      デフォルトの更新ソースを変更するには、
   errors:
-    connection: "Unable to access to current update source. Details: :error"
-    spec: Current update source is not supported.
-    php: Your PHP version is too low to update. Requires :version or later.
+    connection: '現在の更新ソースにアクセスできません。詳細: :error'
+    spec: 現在の更新ソースはサポートされていません。
+    php: PHP バージョンが低すぎるため更新できません。 :version 以降が必要です。
 download:
   errors:
-    download: 'Failed to download. Error: :error'
-    shasum: File validation failed. Please download again.
-    unzip: Failed to unpack files.
-invalid-action: Invalid action
+    download: 'ダウンロードに失敗しました。エラー: :error'
+    shasum: ファイルの検証に失敗しました。もう一度ダウンロードしてください。
+    unzip: ファイルの解凍に失敗しました。
+invalid-action: 無効な操作です

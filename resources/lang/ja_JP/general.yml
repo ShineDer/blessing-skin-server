@@ -1,60 +1,60 @@
 ---
-index: Homepage
-skinlib: Skin Library
-user-center: User Center
-logout: Log Out
-login: Log In
-register: Register Now
-profile: User Profile
+index: ホームページ
+skinlib: スキンライブラリ
+user-center: ユーザーセンター
+logout: ログアウト
+login: ログイン
+register: 新規登録
+profile: プロフィール
 notifications: 通知
-admin-panel: Admin Panel
-explore: Explore
-manage: Manage
-anonymous: Guest
-back: Back
-dashboard: Dashboard
-my-closet: Closet
-my-reports: Reports
-developer: Advanced
-oauth-manage: OAuth2 Apps
-player-manage: Players
-user-manage: Users
-report-manage: Reports
-plugin-manage: Plugins
-plugin-market: Plugin Market
-plugin-configs: Plugin Configs
-customize: Customize
-i18n: Internationalization
-options: Options
-score-options: Score Options
-res-options: Resource Options
-status: Status
-check-update: Check Update
-download-update: Download Updates
-close: Close
-skin: Skin
-cape: Cape
-submit: Submit
-cancel: Cancel
-yes: true
-no: false
-op-success: Operated successfully.
-unknown: Unknown
-notice: Notice
-illegal-parameters: Illegal parameters.
-private: Private
-public: Public
-unexistent-user: No such user.
-player-banned: The owner of this player has been banned.
-texture-deleted: The requested texture has been deleted.
+admin-panel: 管理パネル
+explore: 探す
+manage: 管理
+anonymous: ゲスト
+back: 戻る
+dashboard: ダッシュボード
+my-closet: クローゼット
+my-reports: 通報
+developer: 上級者向け
+oauth-manage: OAuth2 アプリ
+player-manage: プレイヤー
+user-manage: ユーザー
+report-manage: 通報
+plugin-manage: プラグイン
+plugin-market: プラグインマーケット
+plugin-configs: プラグイン設定
+customize: カスタマイズ
+i18n: 多言語化
+options: オプション
+score-options: スコアオプション
+res-options: リソースオプション
+status: ステータス
+check-update: 更新を確認
+download-update: 更新をダウンロード
+close: 閉じる
+skin: スキン
+cape: マント
+submit: 送信
+cancel: キャンセル
+yes: はい
+no: いいえ
+op-success: 操作が成功しました。
+unknown: 不明
+notice: お知らせ
+illegal-parameters: 不正なパラメータです。
+private: 非公開
+public: 公開
+unexistent-user: そのユーザーは存在しません。
+player-banned: このプレイヤーの所有者は BAN されています。
+texture-deleted: 要求されたテクスチャは削除されました。
 user:
-  email: Email
-  nickname: Nickname
-  password: Password
-  score: Score
-  register-at: Registered At
+  email: メールアドレス
+  nickname: ニックネーム
+  password: パスワード
+  score: スコア
+  register-at: 登録日時
 player:
-  owner: Owner
-  player-name: Player Name
-  previews: Texture Previews
-  last-modified: Last Modified
+  owner: 所有者
+  player-name: プレイヤー名
+  previews: テクスチャプレビュー
+  last-modified: 最終更新

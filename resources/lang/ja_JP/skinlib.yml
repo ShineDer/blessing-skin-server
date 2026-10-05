@@ -1,31 +1,31 @@
 ---
 general:
-  upload-new-skin: Upload new skin
+  upload-new-skin: 新しいスキンをアップロード
 show:
-  title: Texture Details
-  deleted: The requested texture was already deleted.
-  private: The requested texture is private and only visible to the uploader and admins.
+  title: テクスチャの詳細
+  deleted: 要求されたテクスチャはすでに削除されています。
+  private: 要求されたテクスチャは非公開で、アップロード者と管理者のみ閲覧できます。
 upload:
-  title: Upload Texture
-  name-rule: Less than 32 characters and must not contain any special one.
-  name-rule-regexp: Custom name rules are applied as :regexp
-  private-score-notice: It will spend you more scores for setting it as private. You will be charged :score scores for per KB storage.
-  invalid-size: Invalid :type file (width :width, height :height)
-  invalid-hd-skin: Invalid HD skin (width and height should be divisible by 32)
+  title: テクスチャをアップロード
+  name-rule: 32 文字未満で、特殊文字を含まないようにしてください。
+  name-rule-regexp: カスタム名前規則が適用されます :regexp
+  private-score-notice: 非公開に設定するとより多くのスコアを消費します。1KB のストレージごとに :score スコアが課金されます。
+  invalid-size: 無効な :type ファイルです（幅 :width、高さ :height）
+  invalid-hd-skin: 無効な HD スキンです（幅と高さは 32 で割り切れる必要があります）
   too-wide: テクスチャが横長すぎます（:widthpx）。許可される最大幅は :maxWidthpxpx です
-  lack-score: You don't have enough score to upload this texture.
-  repeated: The texture is already uploaded by someone else. You can add it to your closet directly.
-  success: Texture :name was uploaded successfully.
+  lack-score: このテクスチャをアップロードするためのスコアが足りません。
+  repeated: このテクスチャはすでに他の誰かによってアップロードされています。クローゼットに直接追加できます。
+  success: テクスチャ :name のアップロードに成功しました。
 delete:
-  success: The texture was deleted successfully.
+  success: テクスチャの削除に成功しました。
 privacy:
-  success: The texture was set to :privacy successfully.
+  success: テクスチャは :privacy に設定されました。
 rename:
-  success: The texture was renamed to :name successfully.
+  success: テクスチャの名前が :name に変更されました。
 model:
-  success: The texture's model was changed to :model successfully.
-no-permission: You have no permission to moderate this texture.
-non-existent: No such texture.
+  success: テクスチャのモデルが :model に変更されました。
+no-permission: このテクスチャを管理する権限がありません。
+non-existent: そのようなテクスチャはありません。
 report:
-  duplicate: You have already reported this texture. The administrators will review it as soon as possible. You can also track the status of your report at User Center.
-  success: Thanks for reporting! The administrators will review it as soon as possible.
+  duplicate: このテクスチャはすでに通報済みです。管理者ができるだけ早く確認します。ユーザーセンターで通報の状態を確認することもできます。
+  success: 通報ありがとうございます！管理者ができるだけ早く確認します。

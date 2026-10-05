@@ -1,183 +1,183 @@
 ---
-option-saved: Option saved.
+option-saved: オプションを保存しました。
 homepage:
-  title: Homepage
+  title: ホームページ
   home_pic_url:
-    title: Picture URL at Homepage
-    hint: Path relative to homepage or full URL, leave empty to use default image.
+    title: ホームページの画像 URL
+    hint: ホームページからの相対パスまたは完全な URL。空欄の場合はデフォルト画像を使用します。
   favicon_url:
-    title: Website Icon
-    hint: Path relative to public/ or full URL.
-    description: The given image must have same width and height (leave blank to use default icon).
+    title: サイトアイコン
+    hint: public/ からの相対パスまたは完全な URL。
+    description: 指定する画像は幅と高さが同じである必要があります（空欄の場合はデフォルトアイコンを使用）。
   transparent_navbar:
-    title: Transparent Navigation Bar
-    label: This will enable transparent navigation bar of home page, but it will turn to be normal if page is scrolled to bottom.
+    title: 透明なナビゲーションバー
+    label: ホームページのナビゲーションバーが透明になりますが、ページを下までスクロールすると通常に戻ります。
   hide_intro:
-    title: Hide Introduction at Bottom
-    label: Scroll bar will be disabled if this option is enabled, as version 2.x.
+    title: 下部の紹介文を隠す
+    label: このオプションを有効にすると、バージョン 2.x と同様にスクロールバーが無効になります。
   fixed_bg:
-    title: Fixed Background
-    label: This option will make background fixed, not scrolled with scroll bar.
+    title: 背景を固定
+    label: このオプションを有効にすると、背景がスクロールバーと一緒にスクロールしなくなります。
   copyright_prefer:
-    title: Program Copyright
-    description: "You can specify a different style of program copyright for each language. To edit a specific language's corresponding program copyright style, please switch to that language and submit your edit. <br><b>Warning:</b> Any evil modification applied on the footer program copyright (including deleting, modifying author, changing link target) with out permission is <b>FORBIDDEN</b>. The author reserves the right to pursue relevant responsibilities."
+    title: プログラムの著作権表示
+    description: 言語ごとに異なるスタイルの著作権表示を指定できます。特定の言語の著作権表示スタイルを編集するには、その言語に切り替えて編集を送信してください。<br><b>警告:</b> 許可なくフッターの著作権表示を改変する行為（削除、著作者の変更、リンク先の変更など）は<b>禁止</b>されています。著作者は関連する責任を追及する権利を留保します。
   copyright_text:
-    title: Custom Copyright Text
-    description: Placeholders are available in custom copyright text. e.g. <code>{site_name}</code> & <code>{site_url}</code>. You can also specify a different footer for each language. To edit a specific language's corresponding footer, please switch to that language and submit your edit.
+    title: カスタム著作権テキスト
+    description: 'カスタム著作権テキストではプレースホルダーが使用できます。例: <code>{site_name}</code> と <code>{site_url}</code>。言語ごとに異なるフッターを指定することもできます。特定の言語のフッターを編集するには、その言語に切り替えて編集を送信してください。'
 customJsCss:
-  title: Custom CSS/JavaScript
+  title: カスタム CSS/JavaScript
   message: |
-    The contents will be attached to &lt;style&gt; and &lt;script&gt; tags.<br>
-    - Here are some useful examples: <a href="https://blessing.netlify.com/css-js.html">Examples of Custom CSS & JavaScript</a>
+    内容は &lt;style&gt; と &lt;script&gt; タグに追加されます。<br>
+    - 便利な例: <a href="https://blessing.netlify.com/css-js.html">カスタム CSS & JavaScript の例</a>
   custom_css: CSS
   custom_js: JavaScript
 rate:
-  title: Scores
+  title: スコア
   score_per_storage:
-    title: Storage
-    addon: scores = 1 KB
+    title: ストレージ
+    addon: スコア = 1 KB
   private_score_per_storage:
-    title: Private Storage
-    addon: scores = 1 KB
-    hint: Uploading private textures will cost more scores.
+    title: 非公開ストレージ
+    addon: スコア = 1 KB
+    hint: 非公開テクスチャをアップロードすると、より多くのスコアを消費します。
   score_per_closet_item:
-    title: Favorites
-    addon: score = 1 closet item
+    title: お気に入り
+    addon: スコア = クローゼットアイテム 1 個
   return_score:
-    title: Score Return
-    label: Return scores back to user after deleting players/textures/closet items.
+    title: スコアの返還
+    label: プレイヤー/テクスチャ/クローゼットアイテムの削除後、スコアをユーザーに返還します。
   score_per_player:
-    title: Players
-    addon: scores = 1 player
-  user_initial_score: User Initial Score
+    title: プレイヤー
+    addon: スコア = プレイヤー 1 人
+  user_initial_score: ユーザーの初期スコア
 report:
-  title: Reporting Textures
+  title: テクスチャの通報
   reporter_score_modification:
-    title: Scores for Submitting an Report
-    description: Set a positive integer value to reward user who submits new reports. Set to a negative value will require scores for submitting reports, and the suspended scores will be available if user's report was resolved. Set to 0 to disable.
+    title: 通報送信に必要なスコア
+    description: 正の整数を設定すると、新しい通報を送信したユーザーに報酬を与えます。負の値を設定すると通報にスコアが必要になり、通報が解決された場合に保留中のスコアが利用可能になります。0 に設定すると無効になります。
   reporter_reward_score:
-    title: Reward the Reporter with Scores If Report Resolved
+    title: 通報が解決された場合、通報者にスコアを報酬として付与
 sign:
-  title: Signing
+  title: サインイン
   sign_score:
-    title: Score Granted
-    addon1: scores ~
-    addon2: scores
+    title: 付与スコア
+    addon1: スコア ～
+    addon2: スコア
   sign_gap_time:
-    title: Gap Time
-    addon: hours
+    title: 間隔時間
+    addon: 時間
   sign_after_zero:
-    title: Time
-    label: Users can sign in after 0 everyday.
-    hint: The above option will be ignored if this is checked.
+    title: 時刻
+    label: ユーザーは毎日 0 時以降にサインインできます。
+    hint: これにチェックを入れると、上記のオプションは無視されます。
 sharing:
-  title: Awarding Sharing
+  title: シェア報酬
   score_award_per_texture:
-    title: Uploader will be rewarded for each uploading texture with
+    title: テクスチャをアップロードするごとにアップロード者に付与される報酬
   take_back_scores_after_deletion:
-    title: Return scores
-    label: Return scores if uploader setting private or deleting texture.
+    title: スコアの返還
+    label: アップロード者が非公開に設定またはテクスチャを削除した場合、スコアを返還します。
   score_award_per_like:
-    title: Each time the texture is collected, uploader will be rewarded with
+    title: テクスチャがお気に入りに追加されるごとにアップロード者に付与される報酬
 general:
-  title: General Options
-  site_name: Site Name
+  title: 一般オプション
+  site_name: サイト名
   site_description:
-    title: Site Description
-    description: You can also specify a different site name and description for each language. To edit a specific language's corresponding site name or description text, please switch to that language and submit your edit.
+    title: サイトの説明
+    description: 言語ごとに異なるサイト名と説明を指定することもできます。特定の言語のサイト名または説明文を編集するには、その言語に切り替えて編集を送信してください。
   site_url:
-    title: Site URL
-    hint: Begin with http(s)://, nerver ends with slash.
+    title: サイト URL
+    hint: http(s):// で始まり、スラッシュで終わらないようにしてください。
   register_with_player_name:
-    title: Register with Player Name
-    label: Require Minecraft's player name when user register
+    title: プレイヤー名で登録
+    label: ユーザー登録時に Minecraft のプレイヤー名を必須にします
   require_verification:
-    title: Account Verification
-    label: Users must verify their email address first.
-  regs_per_ip: Max accounts of one IP
+    title: アカウント認証
+    label: ユーザーは先にメールアドレスを認証する必要があります。
+  regs_per_ip: 1 つの IP あたりの最大アカウント数
   max_upload_file_size:
-    title: Max Upload Size
-    hint: "Limit specified in php.ini: :size"
+    title: 最大アップロードサイズ
+    hint: 'php.ini で指定された制限: :size'
   max_texture_width:
     title: テクスチャの最大幅
     hint: アップロードできるテクスチャの最大幅。64 の整数倍である必要があります
   player_name_rule:
-    title: Player Name Rule
-    official: Letters, numbers and underscores (Mojang's official rule)
-    cjk: Allow CJK Unified Ideographs
-    utf8: Allow all valid UTF-8 characters (excluding whitespaces)
-    custom: Use custom rules (regular expression)
+    title: プレイヤー名の規則
+    official: 英字、数字、アンダースコア（Mojang の公式規則）
+    cjk: CJK 統合漢字を許可
+    utf8: すべての有効な UTF-8 文字を許可（空白を除く）
+    custom: カスタム規則を使用（正規表現）
   custom_player_name_regexp:
-    title: Custom Player Name Rules
-    hint: Only takes effect when the above option is set to 'custom'. Leave empty to allow any character.
-    placeholder: Regular Expressions
+    title: カスタムプレイヤー名規則
+    hint: 上記のオプションが 'custom' に設定されている場合のみ有効です。空欄の場合は任意の文字を許可します。
+    placeholder: 正規表現
   player_name_length:
-    title: Player Name Length
-    suffix: characters
+    title: プレイヤー名の長さ
+    suffix: 文字
   auto_del_invalid_texture:
-    title: Invalid Textures
-    label: Delete invalid textures automatically.
-    hint: Delete textures records whose file no longer exists from skinlib.
+    title: 無効なテクスチャ
+    label: 無効なテクスチャを自動的に削除します。
+    hint: ファイルが存在しなくなったテクスチャレコードをスキンライブラリから削除します。
   allow_downloading_texture:
-    title: Downloading Textures
-    label: Allow users to directly download the source file of a skinlib item.
+    title: テクスチャのダウンロード
+    label: ユーザーがスキンライブラリアイテムのソースファイルを直接ダウンロードできるようにします。
   status_code_for_private:
-    title: HTTP Code for Rejecting Accessing Private Textures
+    title: 非公開テクスチャへのアクセスを拒否する HTTP コード
   texture_name_regexp:
-    title: Texture Name Rules
-    hint: The RegExp for validating name of uploaded textures. Leave empty to allow any character except single, double quote and backslash.
-    placeholder: Regular Expressions
+    title: テクスチャ名の規則
+    hint: アップロードされたテクスチャの名前を検証する正規表現。空欄の場合は、一重引用符、二重引用符、バックスラッシュ以外の任意の文字を許可します。
+    placeholder: 正規表現
   content_policy:
-    title: Content Policy
-    description: Display content policy at texture uploading page, supporting Markdown. To edit a specific language's corresponding content policy, please switch to that language and submit your edit.
+    title: コンテンツポリシー
+    description: テクスチャアップロードページにコンテンツポリシーを表示します。Markdown をサポートしています。特定の言語のコンテンツポリシーを編集するには、その言語に切り替えて編集を送信してください。
 announ:
-  title: Announcement
+  title: お知らせ
   announcement:
-    description: Styling with Markdown is supported. You can also specify a different announcement for each language. To edit a specific language's corresponding announcement, please switch to that language and submit your edit.
+    description: Markdown によるスタイリングをサポートしています。言語ごとに異なるお知らせを指定することもできます。特定の言語のお知らせを編集するには、その言語に切り替えて編集を送信してください。
 meta:
-  title: SEO <meta> tags
+  title: SEO <meta> タグ
   meta_keywords:
-    title: Keywords
-    hint: Split with commas.
+    title: キーワード
+    hint: カンマで区切ってください。
   meta_description:
-    title: Description
-    hint: Description defined in "general options" will be used if you left it empty.
+    title: 説明
+    hint: 空欄の場合、「一般オプション」で定義された説明が使用されます。
   meta_extras:
-    title: Other Custom <meta> Tags
+    title: その他のカスタム <meta> タグ
 recaptcha:
   recaptcha_invisible:
     title: Invisible
-    label: Enable Invisible Mode
-res-warning: This page is ONLY for advanced users. If you aren't familiar with these, please don't modify them!
+    label: Invisible モードを有効にする
+res-warning: このページは上級者専用です。よく理解していない場合は変更しないでください！
 resources:
-  title: Resource Files
-  hint: Please check these options if you enabled CDN for your site.
+  title: リソースファイル
+  hint: サイトで CDN を有効にしている場合は、これらのオプションを確認してください。
   force_ssl:
-    title: Force SSL
-    label: Use HTTPS protocol to load all front-end assets.
-    hint: Please check if SSL really available before turning on.
+    title: SSL を強制
+    label: すべてのフロントエンドアセットを HTTPS プロトコルで読み込みます。
+    hint: 有効にする前に SSL が本当に利用可能か確認してください。
   auto_detect_asset_url:
-    title: Assets URL
-    label: Determine assets url automatically.
-    description: Please unable this if assets URLs are wrongly generated under a CDN. The site url will be used if this is not enabled.
+    title: アセット URL
+    label: アセット URL を自動的に決定します。
+    description: CDN 配下でアセット URL が誤って生成される場合はこれを無効にしてください。無効の場合、サイト URL が使用されます。
   cache_expire_time:
-    title: Cache Exipre Time
-    hint: In seconds, 86400 = one day, 31536000 = one year.
+    title: キャッシュ有効期限
+    hint: 秒単位。86400 = 1 日、31536000 = 1 年。
   cdn_address:
-    title: Front-end Assets CDN
-    hint: Front-end files won't be loaded if URL is unavailable.
+    title: フロントエンドアセット CDN
+    hint: URL が利用できない場合、フロントエンドファイルは読み込まれません。
     description: |
-      The CDN URL you give must refer to a mirror of <code>/public</code> directory,
-      all the files of that directory will be loaded as CDN.<br>
-      <b>How to verify?</b> Verify if <code>{Your CDN URL}/app/manifest.json</code> can be accessed.
+      指定する CDN URL は <code>/public</code> ディレクトリのミラーを指す必要があります。
+      そのディレクトリのすべてのファイルが CDN として読み込まれます。<br>
+      <b>確認方法:</b> <code>{CDN URL}/app/manifest.json</code> にアクセスできるか確認してください。
 cache:
-  title: Cache Configuration
-  clear: Clear Cache
-  cleared: Cache has been cleared.
-  driver: Current cache driver is 「:driver」.
+  title: キャッシュ設定
+  clear: キャッシュをクリア
+  cleared: キャッシュをクリアしました。
+  driver: 現在のキャッシュドライバーは「:driver」です。
   enable_avatar_cache:
-    title: Avatar
-    label: Enable caching avatar
+    title: アバター
+    label: アバターのキャッシュを有効にする
   enable_preview_cache:
-    title: Texture Preivew
-    label: Enable caching texture preivew
+    title: テクスチャプレビュー
+    label: テクスチャプレビューのキャッシュを有効にする
