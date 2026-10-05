@@ -144,7 +144,9 @@ user:
   notifications:
     title: 站內通知
     mark-all-read: 全部標記為已讀
+    mark-read: 標記為已讀
     mark-unread: 標記為未讀
+    delete: 刪除通知
     mark-all-read-warning: 確定要將全部通知標記為已讀嗎？此操作可能導致你忽視部分重要通知。
     delete-warning: 確定要刪除這條通知嗎？刪除後不可恢復。
     retention: 自動刪除已讀通知：

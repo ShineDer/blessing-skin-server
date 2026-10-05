@@ -151,7 +151,7 @@ user:
     delete: Delete notification
     mark-all-read-warning: Mark all notifications as read? You may overlook an important notification.
     delete-warning: Delete this notification? This cannot be undone.
-    retention: Auto-delete read notifications:
+    retention: 'Auto-delete read notifications:'
     retention-forever: Keep forever
     days: days
     retention-saved: Notification retention saved
