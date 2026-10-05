@@ -142,18 +142,18 @@ user:
     resend: Click here to send again.
     sending: Sending...
   notifications:
-    title: Notifications
-    mark-all-read: Mark all as read
-    mark-read: Mark as read
-    mark-unread: Mark unread
-    delete: Delete notification
-    mark-all-read-warning: Mark all notifications as read? You may overlook an important notification.
-    delete-warning: Delete this notification? This cannot be undone.
-    retention: 'Auto-delete read notifications:'
-    retention-forever: Keep forever
-    days: days
-    retention-saved: Notification retention saved
-    retention-warning: Shortening retention may permanently delete read notifications; unread notifications will not be deleted. Continue?
+    title: 通知
+    mark-all-read: すべて既読にする
+    mark-read: 既読にする
+    mark-unread: 未読にする
+    delete: 通知を削除
+    mark-all-read-warning: すべての通知を既読にしますか？重要な通知を見落とす可能性があります。
+    delete-warning: この通知を削除しますか？この操作は元に戻せません。
+    retention: '既読通知を自動削除:'
+    retention-forever: 永久に保持
+    days: 日
+    retention-saved: 通知の保持設定を保存しました
+    retention-warning: 保持期間を短縮すると、既読の通知が完全に削除される場合があります。未読の通知は削除されません。続行しますか？
   oauth:
     id: Client ID
     name: App Name

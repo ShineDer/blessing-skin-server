@@ -142,18 +142,18 @@ user:
     resend: Click here to send again.
     sending: Sending...
   notifications:
-    title: Notifications
-    mark-all-read: Mark all as read
-    mark-read: Mark as read
-    mark-unread: Mark unread
-    delete: Delete notification
-    mark-all-read-warning: Mark all notifications as read? You may overlook an important notification.
-    delete-warning: Delete this notification? This cannot be undone.
-    retention: 'Auto-delete read notifications:'
-    retention-forever: Keep forever
-    days: days
-    retention-saved: Notification retention saved
-    retention-warning: Shortening retention may permanently delete read notifications; unread notifications will not be deleted. Continue?
+    title: Meldingen
+    mark-all-read: Alles als gelezen markeren
+    mark-read: Als gelezen markeren
+    mark-unread: Als ongelezen markeren
+    delete: Melding verwijderen
+    mark-all-read-warning: Alle meldingen als gelezen markeren? Je kunt een belangrijke melding over het hoofd zien.
+    delete-warning: Deze melding verwijderen? Dit kan niet ongedaan worden gemaakt.
+    retention: 'Gelezen meldingen automatisch verwijderen:'
+    retention-forever: Altijd bewaren
+    days: dagen
+    retention-saved: Bewaartermijn van meldingen opgeslagen
+    retention-warning: Het verkorten van de bewaartermijn kan gelezen meldingen permanent verwijderen; ongelezen meldingen worden niet verwijderd. Doorgaan?
   oauth:
     id: Client ID
     name: App Name

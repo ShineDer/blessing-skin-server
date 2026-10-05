@@ -142,18 +142,18 @@ user:
     resend: Click here to send again.
     sending: Sending...
   notifications:
-    title: Notifications
-    mark-all-read: Mark all as read
-    mark-read: Mark as read
-    mark-unread: Mark unread
-    delete: Delete notification
-    mark-all-read-warning: Mark all notifications as read? You may overlook an important notification.
-    delete-warning: Delete this notification? This cannot be undone.
-    retention: 'Auto-delete read notifications:'
-    retention-forever: Keep forever
-    days: days
-    retention-saved: Notification retention saved
-    retention-warning: Shortening retention may permanently delete read notifications; unread notifications will not be deleted. Continue?
+    title: Ειδοποιήσεις
+    mark-all-read: Επισήμανση όλων ως αναγνωσμένων
+    mark-read: Επισήμανση ως αναγνωσμένο
+    mark-unread: Επισήμανση ως μη αναγνωσμένο
+    delete: Διαγραφή ειδοποίησης
+    mark-all-read-warning: Να επισημανθούν όλες οι ειδοποιήσεις ως αναγνωσμένες; Μπορεί να παραβλέψετε μια σημαντική ειδοποίηση.
+    delete-warning: Διαγραφή αυτής της ειδοποίησης; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.
+    retention: 'Αυτόματη διαγραφή αναγνωσμένων ειδοποιήσεων:'
+    retention-forever: Διατήρηση για πάντα
+    days: ημέρες
+    retention-saved: Η ρύθμιση διατήρησης ειδοποιήσεων αποθηκεύτηκε
+    retention-warning: Η μείωση της διατήρησης μπορεί να διαγράψει οριστικά τις αναγνωσμένες ειδοποιήσεις· οι μη αναγνωσμένες ειδοποιήσεις δεν θα διαγραφούν. Συνέχεια;
   oauth:
     id: Client ID
     name: App Name

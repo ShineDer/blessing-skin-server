@@ -142,18 +142,18 @@ user:
     resend: Haga clic aquí para enviar de nuevo.
     sending: Enviando...
   notifications:
-    title: Notifications
-    mark-all-read: Mark all as read
-    mark-read: Mark as read
-    mark-unread: Mark unread
-    delete: Delete notification
-    mark-all-read-warning: Mark all notifications as read? You may overlook an important notification.
-    delete-warning: Delete this notification? This cannot be undone.
-    retention: 'Auto-delete read notifications:'
-    retention-forever: Keep forever
-    days: days
-    retention-saved: Notification retention saved
-    retention-warning: Shortening retention may permanently delete read notifications; unread notifications will not be deleted. Continue?
+    title: Notificaciones
+    mark-all-read: Marcar todo como leído
+    mark-read: Marcar como leído
+    mark-unread: Marcar como no leído
+    delete: Eliminar notificación
+    mark-all-read-warning: ¿Marcar todas las notificaciones como leídas? Podrías pasar por alto una notificación importante.
+    delete-warning: ¿Eliminar esta notificación? Esta acción no se puede deshacer.
+    retention: 'Eliminar automáticamente las notificaciones leídas:'
+    retention-forever: Conservar siempre
+    days: días
+    retention-saved: Retención de notificaciones guardada
+    retention-warning: Reducir la retención puede eliminar permanentemente las notificaciones leídas; las no leídas no se eliminarán. ¿Continuar?
   oauth:
     id: ID de cliente
     name: Nombre de app

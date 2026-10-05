@@ -142,18 +142,18 @@ user:
     resend: Нажмите здесь, чтобы отправить снова.
     sending: Отправка...
   notifications:
-    title: Notifications
-    mark-all-read: Mark all as read
-    mark-read: Mark as read
-    mark-unread: Mark unread
-    delete: Delete notification
-    mark-all-read-warning: Mark all notifications as read? You may overlook an important notification.
-    delete-warning: Delete this notification? This cannot be undone.
-    retention: 'Auto-delete read notifications:'
-    retention-forever: Keep forever
-    days: days
-    retention-saved: Notification retention saved
-    retention-warning: Shortening retention may permanently delete read notifications; unread notifications will not be deleted. Continue?
+    title: Уведомления
+    mark-all-read: Отметить все как прочитанные
+    mark-read: Отметить как прочитанное
+    mark-unread: Отметить как непрочитанное
+    delete: Удалить уведомление
+    mark-all-read-warning: Отметить все уведомления как прочитанные? Вы можете пропустить важное уведомление.
+    delete-warning: Удалить это уведомление? Это действие нельзя отменить.
+    retention: 'Автоматически удалять прочитанные уведомления:'
+    retention-forever: Хранить вечно
+    days: дней
+    retention-saved: Настройка хранения уведомлений сохранена
+    retention-warning: Сокращение срока хранения может навсегда удалить прочитанные уведомления; непрочитанные уведомления не будут удалены. Продолжить?
   oauth:
     id: ID клиента
     name: Имя приложения
