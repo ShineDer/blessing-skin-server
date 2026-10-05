@@ -2,6 +2,17 @@
 sign-success: Firmado con éxito. Obtuviste :score puntuaciones.
 announcement: Anuncio
 no-unread: No hay notificaciones nuevas.
+notifications:
+  title: Notificaciones
+  mark-all-read: Marcar todo como leído
+  mark-all-read-warning: ¿Marcar todas las notificaciones como leídas? Podrías pasar por alto una notificación importante.
+  mark-unread: Marcar como no leído
+  delete-warning: ¿Eliminar esta notificación? Esta acción no se puede deshacer.
+  retention: 'Eliminar automáticamente las notificaciones leídas:'
+  retention-forever: Conservar siempre
+  days: días
+  retention-saved: Retención de notificaciones guardada
+  retention-warning: Reducir la retención puede eliminar permanentemente las notificaciones leídas; las no leídas no se eliminarán. ¿Continuar?
 verification:
   disabled: La verificación del correo electrónico no está disponible.
   frequent-mail: Haces clic en el botón de enviar demasiado rápido. Espera 60 segundos, tío.

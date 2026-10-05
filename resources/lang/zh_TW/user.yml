@@ -2,6 +2,17 @@
 sign-success: 簽到成功，獲得 :score 積分。
 announcement: 公告
 no-unread: 沒有新通知。
+notifications:
+  title: 站內通知
+  mark-all-read: 全部標記為已讀
+  mark-all-read-warning: 確定要將全部通知標記為已讀嗎？此操作可能導致你忽視部分重要通知。
+  mark-unread: 標記為未讀
+  delete-warning: 確定要刪除這條通知嗎？刪除後不可恢復。
+  retention: 自動刪除已讀通知：
+  retention-forever: 永久保留
+  days: 天
+  retention-saved: 通知保留設置已保存
+  retention-warning: 縮短保留期限可能永久刪除已讀通知，未讀通知不會被刪除。確定繼續嗎？
 verification:
   disabled: 電子郵件驗證不可用。
   frequent-mail: 您點擊 "發送" 按鈕的速度過快， 請稍等1分鐘。
