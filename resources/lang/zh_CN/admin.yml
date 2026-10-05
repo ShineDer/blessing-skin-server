@@ -29,6 +29,10 @@ notifications:
     revoke-confirm: 确定要撤回这条通知吗？撤回后将从所有用户的通知列表中删除，且无法恢复。
     end-publicity: 结束公示
     end-confirm: 确定要立即结束公示吗？之后新用户不会再收到弹窗，这条通知会转为普通通知。
+    modify-publicity: 修改公示期
+    modify-publicity-prompt: 请输入新的公示期总天数（1-365）。若新期限早于已公示时长，将自动保留 1 天。
+    modify-publicity-invalid: 请输入 1 到 365 之间的整数。
+    modify-publicity-failed: 修改公示期失败，请重试。
     reopen: 重新公示
     reopen-confirm: 确定要重新开启这条通知的公示吗？这会开始新的公示周期。
     empty: 暂无已发送通知

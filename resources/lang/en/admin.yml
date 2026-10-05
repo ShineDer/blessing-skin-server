@@ -29,6 +29,10 @@ notifications:
     revoke-confirm: Revoke this notification campaign? It will be removed from all users and cannot be restored.
     end-publicity: End publicity
     end-confirm: End publicity now? New users will no longer receive a popup and this becomes a regular notification.
+    modify-publicity: Modify publicity
+    modify-publicity-prompt: Enter the new total publicity period in days (1-365).
+    modify-publicity-invalid: Please enter a whole number between 1 and 365.
+    modify-publicity-failed: Failed to update the publicity period.
     reopen: Reopen publicity
     reopen-confirm: Reopen publicity for this notification? A new publicity period will begin.
     empty: No sent notifications.

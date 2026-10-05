@@ -124,6 +124,7 @@
         var tr = document.createElement('tr'), revoked = item.status === 'revoked', publicized = item.is_publicity_active === true
         var sentAt = new Date(item.published_at || item.created_at).getTime(), mayRevoke = !revoked && Date.now() - sentAt < 24 * 60 * 60 * 1000
         var actions = ''
+        if (publicized) actions += '<button class="btn btn-sm btn-outline-info mr-1" data-days="' + escapeHtml(item.id) + '">{{ trans('admin.notifications.sent.modify-publicity') }}</button>'
         if (publicized) actions += '<button class="btn btn-sm btn-outline-warning mr-1" data-end="' + escapeHtml(item.id) + '">{{ trans('admin.notifications.sent.end-publicity') }}</button>'
         if (mayRevoke) actions += '<button class="btn btn-sm btn-outline-danger" data-revoke="' + escapeHtml(item.id) + '">{{ trans('admin.notifications.sent.revoke') }}</button>'
         if (item.status === 'expired' && item.expires_at) actions += '<button class="btn btn-sm btn-outline-primary" data-reopen="' + escapeHtml(item.id) + '">{{ trans('admin.notifications.sent.reopen') }}</button>'
@@ -135,7 +136,15 @@
     })
   }
   rows.addEventListener('click', function (event) {
-    var button = event.target.closest('[data-revoke],[data-end],[data-reopen]'); if (!button) return
+    var button = event.target.closest('[data-revoke],[data-end],[data-reopen],[data-days]'); if (!button) return
+    if (button.dataset.days) {
+      var input = window.prompt('{{ trans('admin.notifications.sent.modify-publicity-prompt') }}')
+      if (input === null) return
+      var days = parseInt(input, 10)
+      if (!days || days < 1 || days > 365) { window.alert('{{ trans('admin.notifications.sent.modify-publicity-invalid') }}'); return }
+      fetch('{{ url('/admin/notifications') }}/' + button.dataset.days + '/publicity', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrf ? csrf.content : '', Accept: 'application/json' }, body: JSON.stringify({ days: days }) }).then(function (response) { if (response.ok) { load(page) } else { window.alert('{{ trans('admin.notifications.sent.modify-publicity-failed') }}') } })
+      return
+    }
     var action = button.dataset.revoke ? 'revoke' : (button.dataset.end ? 'end-publicity' : 'reopen'), id = button.dataset.revoke || button.dataset.end || button.dataset.reopen
     var message = action === 'revoke' ? '{{ trans('admin.notifications.sent.revoke-confirm') }}' : (action === 'end-publicity' ? '{{ trans('admin.notifications.sent.end-confirm') }}' : '{{ trans('admin.notifications.sent.reopen-confirm') }}')
     if (!window.confirm(message)) return
